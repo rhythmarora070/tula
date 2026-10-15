@@ -1,0 +1,579 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Tula</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
+<style>
+/* Layout: one calm column, the day's plan first; deadlines always pinned; capture last. Palette: soft pastels (lavender lead, peach, mint, sky, rose) on a lavender-tinted paper. */
+:root{
+  --bg:#F6F3FA; --surface:#FFFFFF; --sunk:#EEE9F5; --line:#E3DCEE;
+  --fg:#2A2535; --muted:#6F6880;
+  --accent:#C9BBF0; --accent-ink:#2A2535; --accent-text:#7462B5; --accent-soft:#EDE7FB;
+  --peach:#FFE3D3; --peach-ink:#9A5A33; --mint:#D6F1E3; --mint-ink:#2F7350;
+  --sky:#DCEBFB; --sky-ink:#3B6996; --rose:#FBDDE3; --rose-ink:#A6435A; --butter:#FBEFC8; --butter-ink:#8A6A12;
+  --ok:#2F7350; --orb-a:#E7DEFA; --orb-b:#FFD9C7; --shadow:rgba(80,60,120,.10);
+  --display:"Quicksand",ui-rounded,ui-sans-serif,system-ui,sans-serif;
+  --body:"Nunito Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:18px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1B1923; --surface:#24212E; --sunk:#2D2939; --line:#3A3549;
+  --fg:#EFEBF7; --muted:#A9A2BA;
+  --accent:#B9A8EC; --accent-ink:#1B1923; --accent-text:#C9BBF5; --accent-soft:#363052;
+  --peach:#4A3329; --peach-ink:#FFC9AC; --mint:#243F33; --mint-ink:#9EDDBC;
+  --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --butter:#433B22; --butter-ink:#EBD38A;
+  --ok:#9EDDBC; --orb-a:#4A4170; --orb-b:#6B4A3E; --shadow:rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1B1923; --surface:#24212E; --sunk:#2D2939; --line:#3A3549;
+  --fg:#EFEBF7; --muted:#A9A2BA;
+  --accent:#B9A8EC; --accent-ink:#1B1923; --accent-text:#C9BBF5; --accent-soft:#363052;
+  --peach:#4A3329; --peach-ink:#FFC9AC; --mint:#243F33; --mint-ink:#9EDDBC;
+  --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --butter:#433B22; --butter-ink:#EBD38A;
+  --ok:#9EDDBC; --orb-a:#4A4170; --orb-b:#6B4A3E; --shadow:rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 120px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.brandrow{display:flex;align-items:center;gap:12px}
+.mark{width:40px;height:40px;flex:none}
+.brand{font-family:var(--display);font-weight:700;font-size:30px;line-height:1;letter-spacing:-.01em}
+.tagline{font-size:13px;color:var(--muted);margin-top:3px}
+.date{color:var(--muted);font-size:13px;margin-top:6px}
+.btn{border:1px solid var(--line);background:var(--surface);padding:9px 14px;border-radius:999px;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.5;cursor:default}
+.calm-btn{display:inline-flex;gap:8px;align-items:center}
+.calm-btn i{width:9px;height:9px;border-radius:50%;background:var(--mint-ink)}
+.label{font-family:var(--display);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sec{display:flex;flex-direction:column;gap:12px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.voice{font-family:var(--display);font-size:clamp(19px,4.4vw,23px);font-weight:500;line-height:1.3}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+/* check-in */
+.ci-row{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:center}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale button{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 2px;font-size:12.5px;font-weight:500;min-width:0}
+.scale button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+textarea,input[type=text],input[type=datetime-local],select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{resize:vertical;min-height:70px}
+.ci-form{display:flex;flex-direction:column;gap:12px}
+.ci-sum{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+/* plan */
+.plan{display:flex;flex-direction:column;gap:10px}
+.pick{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.pick.first{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset,0 8px 24px var(--shadow)}
+.num{font-family:var(--display);font-size:30px;font-weight:600;color:var(--accent-text);line-height:1;font-variant-numeric:tabular-nums}
+.pick h3{font-size:17px;font-weight:600}
+.why{color:var(--muted);font-size:13.5px;margin-top:2px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tick{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:transparent;display:grid;place-items:center;flex:none}
+.tick:hover{border-color:var(--ok)}
+.tick svg{opacity:0}
+.tick:hover svg{opacity:.5}
+.steps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.steps label{display:flex;gap:8px;align-items:flex-start;font-size:14px}
+.steps input{margin-top:4px;accent-color:var(--accent-text)}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent-text);font-weight:600;font-size:13px}
+.min{min-width:0}
+/* radar */
+.radar{display:flex;flex-direction:column}
+.r-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.r-item:first-child{border-top:0;padding-top:0}
+.chip{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.chip.crit{background:var(--rose);color:var(--rose-ink)}
+.chip.warn{background:var(--peach);color:var(--peach-ink)}
+.a0{background:var(--accent-soft);color:var(--accent-text)}.a1{background:var(--sky);color:var(--sky-ink)}.a2{background:var(--peach);color:var(--peach-ink)}.a3{background:var(--mint);color:var(--mint-ink)}.a4{background:var(--rose);color:var(--rose-ink)}
+.chip.calm{background:var(--sunk);color:var(--muted)}
+.r-title{font-weight:500;min-width:0;overflow-wrap:anywhere}
+/* capture */
+.tabs{display:flex;gap:6px}
+.tabs button{border:0;background:transparent;padding:6px 2px;margin-right:12px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--fg);border-color:var(--accent-text)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:520px){.grid2,.grid3{grid-template-columns:1fr}.ci-row{grid-template-columns:1fr;gap:6px}}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field>span{font-size:12.5px;font-weight:600;color:var(--muted)}
+.row-end{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.preview{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.preview label{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.preview input{margin-top:4px;accent-color:var(--accent-text)}
+/* list */
+.list{display:flex;flex-direction:column}
+.l-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.l-item:first-child{border-top:0}
+.l-act{display:flex;gap:4px}
+.icon{background:none;border:0;color:var(--muted);font-size:12.5px;font-weight:600;padding:6px 8px;border-radius:8px}
+.icon:hover{background:var(--sunk);color:var(--fg)}
+.icon.danger{color:var(--rose-ink)}
+.done-t{text-decoration:line-through;color:var(--muted)}
+details summary{cursor:pointer;color:var(--muted);font-weight:600;font-size:13.5px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+/* week */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat b{display:block;font-family:var(--display);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--muted)}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;height:70px;margin-top:6px}
+.bar{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.bar i{width:100%;max-width:28px;border-radius:8px 8px 3px 3px;background:var(--accent);display:block}
+.bar i.hi{background:var(--accent-text)}
+.bar i.none{background:transparent;border:1px dashed var(--line);height:6px!important}
+.bar small{font-size:11px;color:var(--muted)}
+.settings{display:flex;flex-direction:column;gap:10px}
+.toggle{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent-text)}
+.empty{border:1px dashed var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+/* toast / nudge */
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(520px,calc(100% - 32px));background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 10px 30px var(--shadow);z-index:30}
+.toast .btn{background:transparent;color:var(--fg);border-color:var(--line);padding:7px 12px;font-size:13px;white-space:nowrap}
+.toast .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.toast p{margin:0;font-size:14.5px}
+/* calm */
+.calm{position:fixed;inset:0;background:var(--bg);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;text-align:center;padding:calc(24px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));overflow-y:auto}
+.orb{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--orb-a),var(--accent) 55%,var(--orb-b));animation:breathe 14s ease-in-out infinite;flex:none}
+@keyframes breathe{0%{transform:scale(.62)}28.5%{transform:scale(1)}57%{transform:scale(1)}100%{transform:scale(.62)}}
+@media (prefers-reduced-motion:reduce){.orb{animation:none;transform:scale(.85)}}
+.calm .voice{max-width:30ch}
+.calm .step{max-width:420px;width:100%}
+.calm .hint{font-family:var(--display);font-weight:500;color:var(--muted);letter-spacing:.06em;min-height:1.5em}
+.status{font-size:12px;color:var(--muted)}
+</style>
+
+<div class="wrap" id="app">
+  <header class="top">
+    <div>
+      <div class="brandrow">
+        <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="20" r="11" fill="var(--accent)"/><circle cx="25" cy="20" r="11" fill="var(--peach)" opacity=".9"/><circle cx="20" cy="20" r="3" fill="var(--accent-text)"/></svg>
+        <div><div class="brand">Tula</div><div class="tagline">One AI. Your whole life, in context.</div></div>
+      </div>
+      <div class="date" id="today"></div>
+    </div>
+    <button class="btn calm-btn" id="calmOpen" type="button"><i></i>I'm overwhelmed</button>
+  </header>
+
+  <section class="sec" aria-labelledby="ciH">
+    <div class="sec-head"><h2 class="label" id="ciH">How are you, really?</h2></div>
+    <div class="card" id="checkin"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="planH">
+    <div class="sec-head"><h2 class="label" id="planH">Today, just these</h2><span class="small muted" id="capNote"></span></div>
+    <div id="plan" class="plan"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="radarH">
+    <div class="sec-head"><h2 class="label" id="radarH">Deadline radar · next 72 hours</h2></div>
+    <div class="card" id="radar"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="capH">
+    <div class="sec-head"><h2 class="label" id="capH">Get it out of your head</h2></div>
+    <div class="card" style="display:flex;flex-direction:column;gap:14px">
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tabDump" aria-selected="true" type="button">Brain dump</button>
+        <button role="tab" id="tabOne" aria-selected="false" type="button">One task</button>
+      </div>
+      <div id="paneDump" style="display:flex;flex-direction:column;gap:10px">
+        <textarea id="dump" rows="4" placeholder="Type it all, messy is fine. e.g. DBMS assignment due friday night, reply to the internship HR about offer letter by tomorrow, plan GDG meetup poster, call mom"></textarea>
+        <div class="row-end"><span class="small muted" id="dumpStatus" style="margin-right:auto;align-self:center"></span><button class="btn primary" id="dumpGo" type="button">Sort it for me</button></div>
+        <div id="dumpPreview"></div>
+      </div>
+      <form id="paneOne" hidden style="display:flex;flex-direction:column;gap:10px">
+        <label class="field"><span>What is it?</span><input type="text" id="fTitle" required maxlength="140" placeholder="Submit ML lab record"></label>
+        <div class="grid2">
+          <label class="field"><span>Due</span><input type="datetime-local" id="fDue"></label>
+          <label class="field"><span>Part of life</span><select id="fArea"></select></label>
+        </div>
+        <div class="grid2">
+          <label class="field"><span>If it slips…</span><select id="fImp"><option value="1">No big deal</option><option value="2" selected>It'd hurt</option><option value="3">Real consequences</option></select></label>
+          <label class="field"><span>Size</span><select id="fEff"><option value="S">Small · under 30 min</option><option value="M" selected>Medium · about an hour</option><option value="L">Big · 2+ hours</option></select></label>
+        </div>
+        <div class="row-end"><button class="btn primary" type="submit">Add task</button></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="allH">
+    <div class="sec-head"><h2 class="label" id="allH">Everything else, held safely</h2><span class="small muted" id="allCount"></span></div>
+    <div class="card"><div id="list" class="list"></div><details id="doneWrap" style="margin-top:10px"><summary id="doneSum"></summary><div id="doneList" class="list" style="margin-top:8px"></div></details></div>
+  </section>
+
+  <section class="sec" aria-labelledby="weekH">
+    <div class="sec-head"><h2 class="label" id="weekH">Your last 7 days</h2></div>
+    <div class="card" id="week" style="display:flex;flex-direction:column;gap:16px"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="setH">
+    <div class="sec-head"><h2 class="label" id="setH">Gentle nudges</h2></div>
+    <div class="card settings">
+      <label class="toggle" for="nOn"><span>Remind me to drink water, move and rest my eyes while this page is open</span><input type="checkbox" id="nOn"></label>
+      <p class="small muted" style="margin:0">Nudges only appear while this page is open in a tab. Phone notifications come in the app version.</p>
+      <div class="status" id="syncStatus">Saving on this device</div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast" hidden role="status" aria-live="polite"><p id="toastMsg"></p><div style="display:flex;gap:6px" id="toastBtns"></div></div>
+
+<div class="calm" id="calm" hidden role="dialog" aria-modal="true" aria-labelledby="calmMsg">
+  <div class="orb" aria-hidden="true"></div>
+  <div class="hint" id="breathHint">Breathe in</div>
+  <p class="voice" id="calmMsg">Nothing else needs you right now. Just this one small step.</p>
+  <div class="card step" id="calmStep"></div>
+  <p class="small muted" id="calmRadar"></p>
+  <button class="btn ghost" id="calmClose" type="button">I'm okay now</button>
+</div>
+
+<script>
+(function(){
+const $=s=>document.getElementById(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const AREAS=['Assignment','Internship / jobs','Community','Personal','Health'];
+const EFF_MIN={S:25,M:60,L:120};
+const MOOD=['Rough','Low','Okay','Good','Great'];
+const ENERGY=['Drained','Tired','Okay','Steady','Charged'];
+const STRESS=['Calm','Light','Some','Heavy','Overloaded'];
+const LS='alm-state-v1';
+
+let S={tasks:[],checkins:{},prefs:{nudges:true},breaks:{},updatedAt:0};
+let docRef=null, sampleFn=null, editingCI=false, draftCI=null, dumpItems=null;
+
+/* ---------- time helpers ---------- */
+const pad=n=>String(n).padStart(2,'0');
+const dayKey=(d=new Date())=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const hoursUntil=t=>t.due?(new Date(t.due)-Date.now())/36e5:null;
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
+function dueLabel(h,due){
+  if(h==null) return {txt:'No date',cls:'calm'};
+  if(h<0){const d=-h; return {txt:d<24?'Overdue '+Math.max(1,Math.round(d))+'h':'Overdue '+Math.round(d/24)+'d',cls:'crit'}}
+  const dd=new Date(due), now=new Date();
+  const tm=dd.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+  if(dayKey(dd)===dayKey(now)) return {txt:'Today '+tm,cls:h<6?'crit':'warn'};
+  const tmw=new Date(now); tmw.setDate(now.getDate()+1);
+  if(dayKey(dd)===dayKey(tmw)) return {txt:'Tomorrow '+tm,cls:'warn'};
+  if(h<24*7) return {txt:dd.toLocaleDateString([], {weekday:'short'})+' '+tm,cls:'calm'};
+  return {txt:dd.toLocaleDateString([], {day:'numeric',month:'short'}),cls:'calm'};
+}
+
+/* ---------- storage ---------- */
+function lsGet(){try{return JSON.parse(localStorage.getItem(LS)||'null')}catch(e){return null}}
+function lsSet(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+let saveTimer=null, saving=Promise.resolve();
+function save(){
+  S.updatedAt=Date.now(); lsSet();
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    if(!docRef) return;
+    const body={v:1,state:JSON.stringify(S),updatedAt:S.updatedAt};
+    saving=saving.then(()=>docRef.set(body)).then(()=>status('Saved to your account')).catch(()=>status('Couldn’t reach your account. Saved on this device.'));
+  },700);
+}
+const status=t=>{$('syncStatus').textContent=t};
+
+/* ---------- planning engine ---------- */
+function openTasks(){const now=Date.now();return S.tasks.filter(t=>!t.done&&!(t.snoozedUntil&&t.snoozedUntil>now))}
+function todayCI(){return S.checkins[dayKey()]||null}
+function isLow(ci){return !!ci&&(ci.energy<=2||ci.stress>=4)}
+function score(t,ci){
+  const h=hoursUntil(t);
+  const u=h==null?0.15:h<=0?1.15:1/(1+h/24);          // urgency: 1 at deadline, .5 a day out
+  const i=t.imp/3;                                     // what it costs if it slips
+  const e={S:0,M:.5,L:1}[t.effort]??.5;
+  const en=ci?(ci.energy-1)/4:.5;
+  let fit=1-Math.abs(e-en);                            // energy-to-effort match
+  if(ci&&ci.stress>=4&&t.effort==='L') fit-=.3;
+  const age=Math.min(.15,((Date.now()-t.created)/864e5)*.03); // stops old tasks fading away
+  return .45*u+.35*i+.2*fit+age;
+}
+function planDay(){
+  const ci=todayCI(), low=isLow(ci);
+  const n=low?2:3;
+  const cap=ci?[0,60,100,170,240,320][ci.energy]:180;
+  const open=openTasks().map(t=>({t,s:score(t,ci),h:hoursUntil(t)}));
+  const must=open.filter(o=>o.h!=null&&o.h<=24).sort((a,b)=>a.h-b.h);
+  const rest=open.filter(o=>!must.includes(o)).sort((a,b)=>b.s-a.s);
+  const picks=[]; let mins=0;
+  for(const o of must){ if(picks.length>=n) break; picks.push(o); mins+=load(o.t,low); }
+  for(const o of rest){ if(picks.length>=n) break; const m=load(o.t,low); if(picks.length&&mins+m>cap) continue; picks.push(o); mins+=m; }
+  return {picks,mins,cap,low,ci,overflow:Math.max(0,must.length-n)};
+}
+function load(t,low){return low&&t.effort==='L'?25:EFF_MIN[t.effort]||60}
+function reason(o,low){
+  const t=o.t,h=o.h;
+  if(h!=null&&h<0) return 'This one slipped past its deadline. Closing it today takes the weight off.';
+  if(h!=null&&h<=24) return 'Due within a day, so it goes first. Everything else can wait.';
+  if(low&&t.effort==='L') return 'Big one, so today you only do the first 25 minutes. That counts.';
+  if(low&&t.effort==='S') return 'Small and doable, even on a low day.';
+  if(t.imp===3) return 'Real consequences if it slips, so we keep it moving.';
+  if(!low&&t.effort==='L') return 'You have fuel today. Good moment for deep work.';
+  if(h!=null&&h<=72) return 'Due soon. A little today keeps it from becoming a scramble.';
+  return 'A good fit for how you’re feeling today.';
+}
+function headline(ci){
+  if(!ci) return 'Check in first and I’ll shape today around how you actually feel.';
+  if(ci.stress>=4&&ci.energy<=2) return 'You’re not behind. You’re overloaded. Today we only do what truly matters.';
+  if(ci.stress>=4) return 'A lot is pressing on you. Let’s shrink today down to what matters.';
+  if(ci.energy<=2) return 'Low battery day. Let’s take a lighter path.';
+  if(ci.energy>=4&&ci.stress<=2) return 'You’ve got fuel and room to think. Good day for one deep piece of work.';
+  return 'A steady day. Three things, one at a time.';
+}
+
+/* ---------- render ---------- */
+function render(){
+  const now=new Date();
+  const hr=now.getHours();
+  $('today').textContent=(hr<5?'Still up?':hr<12?'Good morning':hr<17?'Good afternoon':'Good evening')+' · '+now.toLocaleDateString([], {weekday:'long',day:'numeric',month:'long'});
+  renderCheckin(); renderPlan(); renderRadar(); renderList(); renderWeek();
+  $('nOn').checked=!!S.prefs.nudges;
+}
+function scaleRow(key,labels,val){
+  return `<div class="ci-row"><span class="small" style="font-weight:600">${key[0].toUpperCase()+key.slice(1)}</span><div class="scale" role="group" aria-label="${key}">${labels.map((l,i)=>`<button type="button" data-k="${key}" data-v="${i+1}" aria-pressed="${val===i+1}">${l}</button>`).join('')}</div></div>`;
+}
+function renderCheckin(){
+  const ci=todayCI(), box=$('checkin');
+  if(ci&&!editingCI){
+    box.innerHTML=`<div class="ci-sum"><div class="min"><p class="voice" style="margin:0 0 8px">${esc(headline(ci))}</p><div class="pills"><span class="pill">Mood: ${MOOD[ci.mood-1]}</span><span class="pill">Energy: ${ENERGY[ci.energy-1]}</span><span class="pill">Stress: ${STRESS[ci.stress-1]}</span></div></div><button class="btn ghost" id="ciEdit" type="button">Update</button></div>`;
+    $('ciEdit').onclick=()=>{editingCI=true;draftCI={...ci};renderCheckin()};
+    return;
+  }
+  const d=draftCI||(draftCI={mood:0,energy:0,stress:0,note:''});
+  box.innerHTML=`<div class="ci-form">${scaleRow('mood',MOOD,d.mood)}${scaleRow('energy',ENERGY,d.energy)}${scaleRow('stress',STRESS,d.stress)}
+  <label class="field"><span>Anything on your mind? (optional, stays private)</span><textarea id="ciNote" rows="2" maxlength="600">${esc(d.note)}</textarea></label>
+  <div class="row-end"><button class="btn primary" id="ciSave" type="button" ${d.mood&&d.energy&&d.stress?'':'disabled'}>Plan my day</button></div></div>`;
+  box.querySelectorAll('.scale button').forEach(b=>b.onclick=()=>{d[b.dataset.k]=+b.dataset.v;d.note=$('ciNote').value;renderCheckin()});
+  $('ciSave').onclick=()=>{
+    d.note=$('ciNote').value.trim(); d.at=Date.now();
+    S.checkins[dayKey()]={...d}; editingCI=false; draftCI=null; save(); render();
+    if(d.stress>=4) setTimeout(()=>toast('That sounds heavy. Want to switch to calm mode for a minute?',[['Yes, calm mode',openCalm,true],['Not now',hideToast]]),400);
+  };
+}
+function renderPlan(){
+  const p=planDay(), el=$('plan');
+  $('capNote').textContent=p.picks.length?`about ${fmtMin(p.mins)} of focus`:'';
+  if(!S.tasks.length){
+    el.innerHTML=`<div class="empty"><p class="voice" style="margin:0">Your plate is empty here, which is a good place to start.</p><p class="muted" style="margin:0">Dump everything that's on your mind below. I'll sort it, and pick the 2 or 3 that matter today.</p><button class="btn" id="loadEx" type="button">Try it with an example week</button></div>`;
+    $('loadEx').onclick=loadExamples; return;
+  }
+  if(!p.picks.length){el.innerHTML=`<div class="empty"><p class="voice" style="margin:0">Nothing needs you today.</p><p class="muted" style="margin:0">Rest is part of the plan. Seriously.</p></div>`;return}
+  el.innerHTML=p.picks.map((o,i)=>pickHTML(o,i,p.low)).join('')+(p.overflow?`<p class="small muted" style="margin:0">${p.overflow} more due within a day. They're on the radar below; finish these first.</p>`:'');
+  bindTaskButtons(el);
+}
+function pickHTML(o,i,low){
+  const t=o.t, dl=dueLabel(o.h,t.due);
+  const steps=(t.steps||[]).map((s,j)=>`<li><label><input type="checkbox" data-step="${t.id}:${j}" ${s.done?'checked':''}><span class="${s.done?'done-t':''}">${esc(s.text)}</span></label></li>`).join('');
+  return `<article class="pick ${i===0?'first':''}"><span class="num">${pad(i+1)}</span><div class="min"><h3>${esc(t.title)}</h3><p class="why">${esc(reason(o,low))}</p>
+  <div class="meta"><span class="chip ${dl.cls}">${dl.txt}</span><span class="pill a${Math.max(0,AREAS.indexOf(t.area))}">${esc(t.area)}</span><span class="pill">${{S:'Small',M:'~1 hr',L:'Big'}[t.effort]}</span></div>
+  ${steps?`<ul class="steps">${steps}</ul>`:(sampleFn?`<div style="margin-top:8px"><button class="linkbtn" data-shrink="${t.id}" type="button">Feels too big? Break it into tiny steps</button></div>`:'')}
+  </div><button class="tick" data-done="${t.id}" type="button" aria-label="Mark done: ${esc(t.title)}"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></article>`;
+}
+function renderRadar(){
+  const items=openTasks().map(t=>({t,h:hoursUntil(t)})).filter(o=>o.h!=null&&o.h<=72).sort((a,b)=>a.h-b.h);
+  const snoozedSoon=S.tasks.filter(t=>!t.done&&t.snoozedUntil>Date.now()&&hoursUntil(t)!=null&&hoursUntil(t)<=72);
+  const el=$('radar');
+  if(!items.length&&!snoozedSoon.length){el.innerHTML=`<p class="muted" style="margin:0">Clear skies. Nothing due in the next three days.</p>`;return}
+  el.innerHTML=`<div class="radar">${items.map(o=>{const dl=dueLabel(o.h,o.t.due);return `<div class="r-item"><span class="chip ${dl.cls}">${dl.txt}</span><span class="r-title">${esc(o.t.title)}</span><button class="icon" data-done="${o.t.id}" type="button">Done</button></div>`}).join('')}</div>`+
+   (snoozedSoon.length?`<p class="small muted" style="margin:10px 0 0">${snoozedSoon.length} snoozed task${snoozedSoon.length>1?'s are':' is'} still due soon. Snoozing hides it from today's plan, never from here.</p>`:'');
+  bindTaskButtons(el);
+}
+function renderList(){
+  const ci=todayCI(), planIds=new Set(planDay().picks.map(o=>o.t.id));
+  const open=S.tasks.filter(t=>!t.done&&!planIds.has(t.id)).sort((a,b)=>score(b,ci)-score(a,ci));
+  const done=S.tasks.filter(t=>t.done).sort((a,b)=>b.doneAt-a.doneAt);
+  $('allCount').textContent=open.length?open.length+' waiting':'';
+  $('list').innerHTML=open.length?open.map(t=>{const h=hoursUntil(t),dl=dueLabel(h,t.due),sn=t.snoozedUntil>Date.now();
+    return `<div class="l-item"><span class="chip ${dl.cls}">${dl.txt}</span><div class="min"><div class="r-title">${esc(t.title)}</div><div class="small muted">${esc(t.area)}${sn?' · snoozed till tomorrow':''}</div></div>
+    <div class="l-act">${sn?`<button class="icon" data-wake="${t.id}" type="button">Wake</button>`:`<button class="icon" data-snooze="${t.id}" type="button">Not today</button>`}<button class="icon" data-done="${t.id}" type="button">Done</button><button class="icon danger" data-del="${t.id}" type="button">Delete</button></div></div>`}).join('')
+    :`<p class="muted" style="margin:0">Nothing else. Everything open is in today's plan.</p>`;
+  $('doneWrap').hidden=!done.length;
+  $('doneSum').textContent=`Done (${done.length}) · show`;
+  $('doneList').innerHTML=done.slice(0,30).map(t=>`<div class="l-item"><span class="chip calm">${new Date(t.doneAt).toLocaleDateString([], {day:'numeric',month:'short'})}</span><span class="done-t min">${esc(t.title)}</span><button class="icon" data-undo="${t.id}" type="button">Undo</button></div>`).join('');
+  bindTaskButtons($('list')); bindTaskButtons($('doneList'));
+}
+function renderWeek(){
+  const days=[]; for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(d)}
+  const doneBy=k=>S.tasks.filter(t=>t.done&&dayKey(new Date(t.doneAt))===k).length;
+  const counts=days.map(d=>doneBy(dayKey(d))), max=Math.max(1,...counts);
+  const cis=days.map(d=>S.checkins[dayKey(d)]).filter(Boolean);
+  const heavy=cis.filter(c=>c.stress>=4).length;
+  const avgE=cis.length?(cis.reduce((a,c)=>a+c.energy,0)/cis.length):0;
+  const breaks=days.reduce((a,d)=>a+(S.breaks[dayKey(d)]||0),0);
+  const total=counts.reduce((a,b)=>a+b,0);
+  let line;
+  if(!cis.length&&!total) line='Your week will show up here once you start checking in. No grades, just patterns.';
+  else if(heavy>=3) line=`This week looked heavier than usual, ${heavy} overloaded days. You still kept moving. Next week, let's protect one evening for recovery.`;
+  else if(cis.length&&avgE<2.5) line='Your energy ran low most days. Try putting the hardest task before lunch next week, and sleeping before midnight twice.';
+  else if(total&&breaks<3) line=`You finished ${total} thing${total>1?'s':''} but took very few breaks. Turn on nudges below; a 2-minute pause is not slacking.`;
+  else line=`${total} thing${total===1?'':'s'} done, ${cis.length} check-in${cis.length===1?'':'s'}. That's a steady week. Keep the pace that kept you okay.`;
+  $('week').innerHTML=`<p class="voice" style="margin:0;font-size:18px">${esc(line)}</p>
+  <div class="stats"><div class="stat"><b>${total}</b><span>tasks finished</span></div><div class="stat"><b>${cis.length}/7</b><span>check-ins</span></div><div class="stat"><b>${heavy}</b><span>overloaded days</span></div><div class="stat"><b>${breaks}</b><span>breaks taken</span></div></div>
+  <div><div class="small muted">Tasks finished per day</div><div class="bars">${days.map((d,i)=>`<div class="bar" title="${counts[i]} done"><i class="${counts[i]?(i===6?'hi':''):'none'}" style="height:${counts[i]?Math.max(10,counts[i]/max*48):6}px"></i><small>${d.toLocaleDateString([], {weekday:'narrow'})}</small></div>`).join('')}</div></div>`;
+}
+function fmtMin(m){return m<60?m+' min':(m/60).toFixed(m%60?1:0)+' hr'}
+
+/* ---------- task actions ---------- */
+const byId=id=>S.tasks.find(t=>t.id===id);
+function bindTaskButtons(root){
+  root.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{const t=byId(b.dataset.done);if(!t)return;t.done=true;t.doneAt=Date.now();save();render();
+    toast(cheer(),[['Undo',()=>{t.done=false;save();render();hideToast()}]],5000)});
+  root.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>{const t=byId(b.dataset.undo);t.done=false;save();render()});
+  root.querySelectorAll('[data-snooze]').forEach(b=>b.onclick=()=>{const t=byId(b.dataset.snooze);const d=new Date();d.setDate(d.getDate()+1);d.setHours(5,0,0,0);t.snoozedUntil=+d;save();render();
+    toast('Moved off today. If its deadline gets close, it stays on the radar.',[],3500)});
+  root.querySelectorAll('[data-wake]').forEach(b=>b.onclick=()=>{byId(b.dataset.wake).snoozedUntil=0;save();render()});
+  root.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    if(b.dataset.armed){S.tasks=S.tasks.filter(t=>t.id!==b.dataset.del);save();render();return}
+    b.dataset.armed='1';b.textContent='Sure?';setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent='Delete'}},3000)});
+  root.querySelectorAll('[data-step]').forEach(c=>c.onchange=()=>{const [id,j]=c.dataset.step.split(':');const t=byId(id);t.steps[+j].done=c.checked;
+    if(t.steps.every(s=>s.done)){t.done=true;t.doneAt=Date.now();toast(cheer(),[],4000)} save();render()});
+  root.querySelectorAll('[data-shrink]').forEach(b=>b.onclick=()=>shrink(byId(b.dataset.shrink),b));
+}
+const CHEERS=['Done. One less thing living in your head.','That’s handled. Breathe out.','Nice. You showed up for yourself there.','Off the list. Take a sip of water before the next one.'];
+const cheer=()=>CHEERS[Math.floor(Math.random()*CHEERS.length)];
+function addTask(o){S.tasks.push({id:uid(),title:String(o.title).slice(0,140),due:o.due||'',imp:[1,2,3].includes(+o.imp)?+o.imp:2,effort:['S','M','L'].includes(o.effort)?o.effort:'M',area:AREAS.includes(o.area)?o.area:'Personal',done:false,created:Date.now(),steps:[],snoozedUntil:0})}
+function loadExamples(){
+  const at=(days,h,m)=>{const d=new Date();d.setDate(d.getDate()+days);d.setHours(h,m||0,0,0);return dayKey(d)+'T'+pad(h)+':'+pad(m||0)};
+  [['Example: Submit DBMS assignment',at(0,23,59),3,'M','Assignment'],['Example: Reply to internship HR about offer letter',at(1,12),3,'S','Internship / jobs'],
+   ['Example: Design poster for community meetup',at(2,18),2,'L','Community'],['Example: Revise unit 3 for ML quiz',at(4,9),2,'L','Assignment'],
+   ['Example: Update resume with hackathon project','',2,'M','Internship / jobs'],['Example: Call home','',1,'S','Personal']].forEach(([title,due,imp,effort,area])=>addTask({title,due,imp,effort,area}));
+  save();render();toast('Loaded 6 example tasks. Delete them anytime and add your own.',[],4000);
+}
+
+/* ---------- capture ---------- */
+$('fArea').innerHTML=AREAS.map(a=>`<option>${a}</option>`).join('');
+function setTab(dump){$('tabDump').setAttribute('aria-selected',dump);$('tabOne').setAttribute('aria-selected',!dump);$('paneDump').hidden=!dump;$('paneOne').hidden=dump;if(!dump)$('fTitle').focus()}
+$('tabDump').onclick=()=>setTab(true);$('tabOne').onclick=()=>setTab(false);
+$('paneOne').onsubmit=e=>{e.preventDefault();const title=$('fTitle').value.trim();if(!title)return;
+  addTask({title,due:$('fDue').value,imp:$('fImp').value,effort:$('fEff').value,area:$('fArea').value});save();render();$('paneOne').reset();toast('Added. It’s safe here now.',[],2500)};
+$('dumpGo').onclick=async()=>{
+  const txt=$('dump').value.trim(); if(!txt) {$('dumpStatus').textContent='Type a few things first.';return}
+  if(!sampleFn){ // no AI here: one line = one task
+    dumpItems=txt.split(/\n|;/).map(s=>s.trim()).filter(Boolean).map(t=>({title:t,due:'',imp:2,effort:'M',area:'Personal'}));
+    $('dumpStatus').textContent='Split by line. Add dates after, in One task.'; showPreview(); return;
+  }
+  const b=$('dumpGo'); b.disabled=true; $('dumpStatus').textContent='Sorting…';
+  const now=new Date();
+  const prompt=`You turn a stressed student's messy brain dump into clean tasks.
+Now: ${now.toLocaleDateString('en-GB',{weekday:'long'})} ${dayKey(now)} ${pad(now.getHours())}:${pad(now.getMinutes())} (local time).
+Reply with only a JSON array. Each item: {"title": short actionable title starting with a verb, max 70 chars, "due": "YYYY-MM-DDTHH:mm" local time or "" if no deadline was stated or implied (a day without a time means 23:59 that day; "tomorrow morning" means 10:00), "imp": 1|2|3 (3 = real consequences like grades, offers, internships, deadlines others depend on), "effort": "S"|"M"|"L" (S under 30 min, M about an hour, L 2+ hours), "area": one of ${JSON.stringify(AREAS)}}.
+Split combined items. Do not invent tasks that are not in the text. Example: [{"title":"Submit DBMS assignment","due":"2026-10-17T23:59","imp":3,"effort":"M","area":"Assignment"}]
+
+Brain dump:
+${txt}`;
+  try{
+    const r=await sampleFn.json(prompt,{modelTier:'quick'});
+    if(!Array.isArray(r)||!r.length) throw {code:'empty'};
+    dumpItems=r.filter(x=>x&&x.title).slice(0,25).map(x=>({...x,due:/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(x.due||'')?x.due:''}));
+    $('dumpStatus').textContent=`Found ${dumpItems.length}. Check them, then add.`; showPreview();
+  }catch(e){
+    $('dumpStatus').textContent=e&&e.code==='not_granted'?'AI sorting is off for this page. Splitting by line instead.':e&&e.code==='rate_limited'?'Too many requests just now. Try again in a minute.':'Couldn’t sort that. Try again, or add it as one task.';
+    if(e&&e.code==='not_granted'){sampleFn=null;$('dumpGo').click()}
+  }finally{b.disabled=false}
+};
+function showPreview(){
+  const el=$('dumpPreview');
+  el.innerHTML=`<div class="preview">${dumpItems.map((x,i)=>{const dl=dueLabel(x.due?(new Date(x.due)-Date.now())/36e5:null,x.due);
+   return `<label><input type="checkbox" data-pi="${i}" checked><span class="min"><b style="font-weight:600">${esc(x.title)}</b><br><span class="small muted">${dl.txt} · ${esc(x.area||'Personal')} · ${{1:'low stakes',2:'matters',3:'high stakes'}[x.imp]||'matters'}</span></span></label>`}).join('')}</div>
+   <div class="row-end" style="margin-top:10px"><button class="btn ghost" id="pvCancel" type="button">Discard</button><button class="btn primary" id="pvAdd" type="button">Add selected</button></div>`;
+  $('pvCancel').onclick=()=>{dumpItems=null;el.innerHTML='';$('dumpStatus').textContent=''};
+  $('pvAdd').onclick=()=>{const sel=[...el.querySelectorAll('[data-pi]')].filter(c=>c.checked).map(c=>dumpItems[+c.dataset.pi]);
+    sel.forEach(addTask);save();dumpItems=null;el.innerHTML='';$('dump').value='';$('dumpStatus').textContent='';render();
+    toast(`Added ${sel.length}. Your head can let go of ${sel.length===1?'it':'them'} now.`,[],3500)};
+}
+async function shrink(t,b){
+  if(!t||!sampleFn)return; b.disabled=true; b.textContent='Breaking it down…';
+  try{
+    const r=await sampleFn.json(`Break this task into 3 to 5 tiny, concrete first steps a tired student could start in under 10 minutes each. Task: "${t.title}" (area: ${t.area}). Reply with only a JSON array of short strings, each under 60 characters, starting with a verb. Example: ["Open the assignment PDF","Write 3 bullet points for Q1"]`,{modelTier:'quick'});
+    if(!Array.isArray(r)||!r.length) throw 0;
+    t.steps=r.slice(0,5).map(s=>({text:String(s).slice(0,80),done:false})); save(); render();
+  }catch(e){b.disabled=false;b.textContent='Couldn’t break it down. Try again'}
+}
+
+/* ---------- toast & nudges ---------- */
+let toastTimer=null;
+function toast(msg,btns=[],ms=0){
+  $('toastMsg').textContent=msg; const bw=$('toastBtns'); bw.innerHTML='';
+  btns.forEach(([l,fn,primary])=>{const b=document.createElement('button');b.className='btn'+(primary?' primary':'');b.type='button';b.textContent=l;b.onclick=fn;bw.append(b)});
+  $('toast').hidden=false; clearTimeout(toastTimer); if(ms) toastTimer=setTimeout(hideToast,ms);
+}
+function hideToast(){$('toast').hidden=true}
+const NUDGES={
+  water:{every:60,msgs:['Sip of water? Your brain is about 75% of it.','Water break. Future you, mid-deadline, says thanks.','Quick glass of water, then back to it.']},
+  move:{every:55,msgs:['You’ve been still a while. Stand up and roll your shoulders for a minute?','Two-minute walk? Even to the kitchen and back counts.','Stretch break. Reach up, then touch your toes, slowly.']},
+  eyes:{every:25,msgs:['Look at something 20 feet away for 20 seconds. Your eyes will thank you.','Screen break for your eyes. Look out a window for a moment.']},
+};
+const lastN={water:Date.now(),move:Date.now(),eyes:Date.now()}; let lastAny=Date.now(), sleepShown='';
+function nudgeTick(){
+  if(!S.prefs.nudges||!$('toast').hidden||!$('calm').hidden||document.hidden) return;
+  const now=Date.now(), hr=new Date().getHours();
+  if((hr>=23||hr<4)&&sleepShown!==dayKey()){sleepShown=dayKey();
+    toast('It’s late. Whatever’s left will still be here tomorrow, and you’ll be sharper for it.',[['Good night',hideToast,true]]);return}
+  if(now-lastAny<20*6e4) return;
+  for(const k of ['eyes','move','water']){const n=NUDGES[k];
+    if(now-lastN[k]>=n.every*6e4){lastN[k]=now;lastAny=now;
+      toast(n.msgs[Math.floor(Math.random()*n.msgs.length)],[['Did it',()=>{const d=dayKey();S.breaks[d]=(S.breaks[d]||0)+1;save();renderWeek();toast('Good. That counts.',[],2000)},true],['Later',()=>{lastN[k]=Date.now()-(n.every-10)*6e4;hideToast()}]]);
+      return}}
+}
+setInterval(nudgeTick,30000);
+$('nOn').onchange=e=>{S.prefs.nudges=e.target.checked;save()};
+
+/* ---------- calm mode ---------- */
+let breathTimer=null;
+function openCalm(){
+  hideToast();
+  const p=planDay(), top=p.picks[0];
+  let step='';
+  if(top){const t=top.t, next=(t.steps||[]).find(s=>!s.done);
+    step=`<div class="label" style="margin-bottom:6px">Your one next step</div><p style="margin:0 0 12px;font-weight:600;font-size:17px">${esc(next?next.text:(t.effort==='L'?'Spend 10 minutes on: ':'')+t.title)}</p>
+    <div class="row-end" style="justify-content:center">${next?`<button class="btn primary" id="calmStepDone" type="button">Done with this step</button>`:`<button class="btn primary" id="calmTaskDone" type="button">I did it</button>`}</div>`;
+  } else step=`<p style="margin:0">There's nothing you have to do right now. Just breathe.</p>`;
+  $('calmStep').innerHTML=step;
+  const soon=openTasks().filter(t=>{const h=hoursUntil(t);return h!=null&&h<=72}).length;
+  $('calmRadar').textContent=soon?`${soon} deadline${soon>1?'s are':' is'} held safely on the radar. You don’t need to think about ${soon>1?'them':'it'} right now.`:'';
+  if(top){
+    const sd=$('calmStepDone'), td=$('calmTaskDone');
+    if(sd) sd.onclick=()=>{const nx=top.t.steps.find(s=>!s.done);nx.done=true;if(top.t.steps.every(s=>s.done)){top.t.done=true;top.t.doneAt=Date.now()}save();render();openCalm();$('calmMsg').textContent='That’s one. You’re doing better than you think.'};
+    if(td) td.onclick=()=>{top.t.done=true;top.t.doneAt=Date.now();save();render();openCalm();$('calmMsg').textContent='Done. Take a breath before anything else.'};
+  }
+  $('calm').hidden=false; $('calmClose').focus();
+  const phases=[['Breathe in',4],['Hold',4],['Breathe out',6]]; let i=0;
+  const run=()=>{$('breathHint').textContent=phases[i][0];breathTimer=setTimeout(()=>{i=(i+1)%3;run()},phases[i][1]*1000)};
+  clearTimeout(breathTimer); run();
+}
+$('calmOpen').onclick=()=>{$('calmMsg').textContent='Nothing else needs you right now. Just this one small step.';openCalm()};
+$('calmClose').onclick=()=>{$('calm').hidden=true;clearTimeout(breathTimer)};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('calm').hidden)$('calmClose').click()});
+
+/* ---------- boot ---------- */
+const local=lsGet(); if(local&&typeof local==='object') S=Object.assign(S,local);
+render();
+setInterval(()=>{if($('calm').hidden&&!document.querySelector('textarea:focus,input:focus,select:focus')){renderPlan();renderRadar()}},5*6e4);
+(async()=>{
+  const use=window.claude&&window.claude.use;
+  if(!use) return;
+  try{
+    const [db,user,smp]=await Promise.all([claude.use('db'),claude.use('user'),claude.use('sample')]);
+    sampleFn=smp||null;
+    if(db&&user){const id=await user.id(); if(id){
+      docRef=db.collection('data/users/'+id).doc('state');
+      const snap=await docRef.get();
+      if(snap.exists){const d=snap.data(); try{const cloud=JSON.parse(d.state); if(cloud&&(cloud.updatedAt||0)>=(S.updatedAt||0)){S=Object.assign({tasks:[],checkins:{},prefs:{nudges:true},breaks:{}},cloud);lsSet()} else save()}catch(e){}}
+      else if(S.tasks.length||Object.keys(S.checkins).length) save();
+      status('Saved to your account');
+    }}
+    render();
+  }catch(e){status('Saving on this device')}
+})();
+})();
+</script>
+
+</body></html>
