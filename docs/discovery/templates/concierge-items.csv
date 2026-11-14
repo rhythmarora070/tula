@@ -1,0 +1,2 @@
+item_id,number,participant_code,received_at,sent_as,source_channel,title,due,due_words,date_unclear,stakes,kind,submit,link,duplicate_of,moved_from,reminders_planned,reminders_sent,got_reply_minutes,outcome,in_digest_on,notes
+EXAMPLE,individual,C01,2026-11-16 21:40,screenshot,Class WhatsApp group,Submit ML lab record,2026-11-20 17:00,Friday 5 pm,N,Matters,Assignment,Upload on Classroom,,,,"Thu 17:00, Fri 14:00",2,12,Done,,Delete this row before use

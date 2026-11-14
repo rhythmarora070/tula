@@ -4,14 +4,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
 <style>
-/* Layout: one calm column, the day's plan first; deadlines always pinned; capture last. Palette: soft pastels (lavender lead, peach, mint, sky, rose) on a lavender-tinted paper. */
+/* Layout: one calm column. What's due first, then today's picks and the 72-hour radar, then capture. Palette: soft pastels (lavender lead, peach, mint, sky, rose, butter) on a lavender-tinted paper. */
 :root{
   --bg:#F6F3FA; --surface:#FFFFFF; --sunk:#EEE9F5; --line:#E3DCEE;
   --fg:#2A2535; --muted:#6F6880;
   --accent:#C9BBF0; --accent-ink:#2A2535; --accent-text:#7462B5; --accent-soft:#EDE7FB;
   --peach:#FFE3D3; --peach-ink:#9A5A33; --mint:#D6F1E3; --mint-ink:#2F7350;
   --sky:#DCEBFB; --sky-ink:#3B6996; --rose:#FBDDE3; --rose-ink:#A6435A; --butter:#FBEFC8; --butter-ink:#8A6A12;
-  --ok:#2F7350; --orb-a:#E7DEFA; --orb-b:#FFD9C7; --shadow:rgba(80,60,120,.10);
+  --ok:#2F7350; --shadow:rgba(80,60,120,.10);
   --display:"Quicksand",ui-rounded,ui-sans-serif,system-ui,sans-serif;
   --body:"Nunito Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:18px;
@@ -22,20 +22,21 @@
   --accent:#B9A8EC; --accent-ink:#1B1923; --accent-text:#C9BBF5; --accent-soft:#363052;
   --peach:#4A3329; --peach-ink:#FFC9AC; --mint:#243F33; --mint-ink:#9EDDBC;
   --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --butter:#433B22; --butter-ink:#EBD38A;
-  --ok:#9EDDBC; --orb-a:#4A4170; --orb-b:#6B4A3E; --shadow:rgba(0,0,0,.35); color-scheme:dark}}
+  --ok:#9EDDBC; --shadow:rgba(0,0,0,.35); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1B1923; --surface:#24212E; --sunk:#2D2939; --line:#3A3549;
   --fg:#EFEBF7; --muted:#A9A2BA;
   --accent:#B9A8EC; --accent-ink:#1B1923; --accent-text:#C9BBF5; --accent-soft:#363052;
   --peach:#4A3329; --peach-ink:#FFC9AC; --mint:#243F33; --mint-ink:#9EDDBC;
   --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --butter:#433B22; --butter-ink:#EBD38A;
-  --ok:#9EDDBC; --orb-a:#4A4170; --orb-b:#6B4A3E; --shadow:rgba(0,0,0,.35); color-scheme:dark}
+  --ok:#9EDDBC; --shadow:rgba(0,0,0,.35); color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
 .wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 120px;display:flex;flex-direction:column;gap:28px}
 h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
+a{color:var(--accent-text);font-weight:600}
 :focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
 .top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
 .brandrow{display:flex;align-items:center;gap:12px}
@@ -48,34 +49,34 @@ button{cursor:pointer}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .btn.ghost{background:transparent}
 .btn:disabled{opacity:.5;cursor:default}
-.calm-btn{display:inline-flex;gap:8px;align-items:center}
-.calm-btn i{width:9px;height:9px;border-radius:50%;background:var(--mint-ink)}
 .label{font-family:var(--display);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .sec{display:flex;flex-direction:column;gap:12px}
-.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
 .voice{font-family:var(--display);font-size:clamp(19px,4.4vw,23px);font-weight:500;line-height:1.3}
 .muted{color:var(--muted)}
 .small{font-size:13px}
-/* check-in */
-.ci-row{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:center}
-.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.min{min-width:0}
+/* time question */
+.time-q{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:center}
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .scale button{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 2px;font-size:12.5px;font-weight:500;min-width:0}
 .scale button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 textarea,input[type=text],input[type=datetime-local],select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 textarea{resize:vertical;min-height:70px}
-.ci-form{display:flex;flex-direction:column;gap:12px}
-.ci-sum{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.pill.moved{background:var(--butter);color:var(--butter-ink)}
 /* plan */
 .plan{display:flex;flex-direction:column;gap:10px}
 .pick{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
 .pick.first{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset,0 8px 24px var(--shadow)}
 .num{font-family:var(--display);font-size:30px;font-weight:600;color:var(--accent-text);line-height:1;font-variant-numeric:tabular-nums}
-.pick h3{font-size:17px;font-weight:600}
-.why{color:var(--muted);font-size:13.5px;margin-top:2px}
+.pick h3{font-size:17px;font-weight:600;overflow-wrap:anywhere}
+.why{color:var(--muted);font-size:13.5px;margin:2px 0 0}
 .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.det{display:flex;flex-direction:column;gap:2px;margin-top:8px;overflow-wrap:anywhere}
+.acts{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
 .tick{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:transparent;display:grid;place-items:center;flex:none}
 .tick:hover{border-color:var(--ok)}
 .tick svg{opacity:0}
@@ -84,7 +85,6 @@ textarea{resize:vertical;min-height:70px}
 .steps label{display:flex;gap:8px;align-items:flex-start;font-size:14px}
 .steps input{margin-top:4px;accent-color:var(--accent-text)}
 .linkbtn{background:none;border:0;padding:0;color:var(--accent-text);font-weight:600;font-size:13px}
-.min{min-width:0}
 /* radar */
 .radar{display:flex;flex-direction:column}
 .r-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
@@ -92,33 +92,39 @@ textarea{resize:vertical;min-height:70px}
 .chip{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .chip.crit{background:var(--rose);color:var(--rose-ink)}
 .chip.warn{background:var(--peach);color:var(--peach-ink)}
-.a0{background:var(--accent-soft);color:var(--accent-text)}.a1{background:var(--sky);color:var(--sky-ink)}.a2{background:var(--peach);color:var(--peach-ink)}.a3{background:var(--mint);color:var(--mint-ink)}.a4{background:var(--rose);color:var(--rose-ink)}
 .chip.calm{background:var(--sunk);color:var(--muted)}
+.a0{background:var(--accent-soft);color:var(--accent-text)}.a1{background:var(--sky);color:var(--sky-ink)}.a2{background:var(--peach);color:var(--peach-ink)}.a3{background:var(--butter);color:var(--butter-ink)}.a4{background:var(--mint);color:var(--mint-ink)}.a5{background:var(--rose);color:var(--rose-ink)}
 .r-title{font-weight:500;min-width:0;overflow-wrap:anywhere}
 /* capture */
 .tabs{display:flex;gap:6px}
 .tabs button{border:0;background:transparent;padding:6px 2px;margin-right:12px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent}
 .tabs button[aria-selected="true"]{color:var(--fg);border-color:var(--accent-text)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media (max-width:520px){.grid2,.grid3{grid-template-columns:1fr}.ci-row{grid-template-columns:1fr;gap:6px}}
 .field{display:flex;flex-direction:column;gap:5px;min-width:0}
 .field>span{font-size:12.5px;font-weight:600;color:var(--muted)}
-.row-end{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.preview{display:flex;flex-direction:column;gap:6px;margin-top:6px}
-.preview label{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
-.preview input{margin-top:4px;accent-color:var(--accent-text)}
+.row-end{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap}
+.preview{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.pv{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.pv input[type=text],.pv input[type=datetime-local],.pv select{background:var(--surface)}
+.pv-head{display:flex;gap:10px;align-items:center}
+.pv-head input[type=checkbox]{width:18px;height:18px;flex:none;accent-color:var(--accent-text)}
+.pv-head input[type=text]{font-weight:600}
+.src{margin:0;color:var(--muted)}
+.flag{color:var(--rose-ink);font-weight:600}
+.dup{padding:10px 12px;border-radius:10px;background:var(--butter);color:var(--butter-ink);font-size:13px;display:flex;flex-direction:column;gap:8px}
+.dup select{background:var(--surface);color:var(--fg)}
 /* list */
 .list{display:flex;flex-direction:column}
-.l-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.l-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:11px 0;border-top:1px solid var(--line)}
 .l-item:first-child{border-top:0}
-.l-act{display:flex;gap:4px}
+.l-act{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end}
 .icon{background:none;border:0;color:var(--muted);font-size:12.5px;font-weight:600;padding:6px 8px;border-radius:8px}
 .icon:hover{background:var(--sunk);color:var(--fg)}
 .icon.danger{color:var(--rose-ink)}
 .done-t{text-decoration:line-through;color:var(--muted)}
 details summary{cursor:pointer;color:var(--muted);font-weight:600;font-size:13.5px;list-style:none}
 details summary::-webkit-details-marker{display:none}
+@media (max-width:520px){.grid2{grid-template-columns:1fr}.time-q{grid-template-columns:1fr}.scale{grid-template-columns:repeat(2,1fr)}.l-item{grid-template-columns:auto 1fr}.l-act{grid-column:1/-1}}
 /* week */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media (max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
@@ -130,23 +136,21 @@ details summary::-webkit-details-marker{display:none}
 .bar i.hi{background:var(--accent-text)}
 .bar i.none{background:transparent;border:1px dashed var(--line);height:6px!important}
 .bar small{font-size:11px;color:var(--muted)}
-.settings{display:flex;flex-direction:column;gap:10px}
+.settings{display:flex;flex-direction:column;gap:14px}
+.settings p{margin:0}
 .toggle{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.toggle input{width:20px;height:20px;accent-color:var(--accent-text)}
+.toggle input{width:20px;height:20px;flex:none;accent-color:var(--accent-text)}
+.toggle .btn{flex:none}
 .empty{border:1px dashed var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
-/* toast / nudge */
+/* toast */
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(520px,calc(100% - 32px));background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 10px 30px var(--shadow);z-index:30}
 .toast .btn{background:transparent;color:var(--fg);border-color:var(--line);padding:7px 12px;font-size:13px;white-space:nowrap}
 .toast .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.toast p{margin:0;font-size:14.5px}
-/* calm */
-.calm{position:fixed;inset:0;background:var(--bg);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;text-align:center;padding:calc(24px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));overflow-y:auto}
-.orb{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--orb-a),var(--accent) 55%,var(--orb-b));animation:breathe 14s ease-in-out infinite;flex:none}
-@keyframes breathe{0%{transform:scale(.62)}28.5%{transform:scale(1)}57%{transform:scale(1)}100%{transform:scale(.62)}}
-@media (prefers-reduced-motion:reduce){.orb{animation:none;transform:scale(.85)}}
-.calm .voice{max-width:30ch}
-.calm .step{max-width:420px;width:100%}
-.calm .hint{font-family:var(--display);font-weight:500;color:var(--muted);letter-spacing:.06em;min-height:1.5em}
+.toast p{margin:0;font-size:14.5px;overflow-wrap:anywhere;min-width:0}
+/* just the next step */
+.focus{position:fixed;inset:0;background:var(--bg);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:calc(24px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));overflow-y:auto}
+.focus .voice{max-width:30ch;margin:0}
+.focus .step{max-width:420px;width:100%}
 .status{font-size:12px;color:var(--muted)}
 </style>
 
@@ -155,20 +159,19 @@ details summary::-webkit-details-marker{display:none}
     <div>
       <div class="brandrow">
         <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="20" r="11" fill="var(--accent)"/><circle cx="25" cy="20" r="11" fill="var(--peach)" opacity=".9"/><circle cx="20" cy="20" r="3" fill="var(--accent-text)"/></svg>
-        <div><div class="brand">Tula</div><div class="tagline">One AI. Your whole life, in context.</div></div>
+        <div><div class="brand">Tula</div><div class="tagline">Every deadline, sorted by what's at stake.</div></div>
       </div>
       <div class="date" id="today"></div>
     </div>
-    <button class="btn calm-btn" id="calmOpen" type="button"><i></i>I'm overwhelmed</button>
   </header>
 
-  <section class="sec" aria-labelledby="ciH">
-    <div class="sec-head"><h2 class="label" id="ciH">How are you, really?</h2></div>
-    <div class="card" id="checkin"></div>
+  <section class="sec" aria-labelledby="dueH">
+    <div class="sec-head"><h2 class="label" id="dueH">What's due</h2></div>
+    <div class="card" id="due"></div>
   </section>
 
   <section class="sec" aria-labelledby="planH">
-    <div class="sec-head"><h2 class="label" id="planH">Today, just these</h2><span class="small muted" id="capNote"></span></div>
+    <div class="sec-head"><h2 class="label" id="planH">Today, just these</h2><button class="linkbtn" id="focusOpen" type="button" hidden>Too much? Show just the next step</button></div>
     <div id="plan" class="plan"></div>
   </section>
 
@@ -177,29 +180,34 @@ details summary::-webkit-details-marker{display:none}
     <div class="card" id="radar"></div>
   </section>
 
-  <section class="sec" aria-labelledby="capH">
-    <div class="sec-head"><h2 class="label" id="capH">Get it out of your head</h2></div>
+  <section class="sec" aria-labelledby="capH" id="capture">
+    <div class="sec-head"><h2 class="label" id="capH">Send it to Tula</h2></div>
     <div class="card" style="display:flex;flex-direction:column;gap:14px">
       <div class="tabs" role="tablist">
-        <button role="tab" id="tabDump" aria-selected="true" type="button">Brain dump</button>
-        <button role="tab" id="tabOne" aria-selected="false" type="button">One task</button>
+        <button role="tab" id="tabDump" aria-selected="true" type="button">Paste a notice</button>
+        <button role="tab" id="tabOne" aria-selected="false" type="button">Quick add</button>
       </div>
       <div id="paneDump" style="display:flex;flex-direction:column;gap:10px">
-        <textarea id="dump" rows="4" placeholder="Type it all, messy is fine. e.g. DBMS assignment due friday night, reply to the internship HR about offer letter by tomorrow, plan GDG meetup poster, call mom"></textarea>
-        <div class="row-end"><span class="small muted" id="dumpStatus" style="margin-right:auto;align-self:center"></span><button class="btn primary" id="dumpGo" type="button">Sort it for me</button></div>
+        <textarea id="dump" rows="4" aria-label="Paste a notice" placeholder="Paste the message as you got it. One notice per paragraph. e.g. ML lab record submission by Friday 5 pm, upload on Classroom, format attached."></textarea>
+        <div class="row-end"><span class="small muted" id="dumpStatus" style="margin-right:auto"></span><button class="btn ghost" id="dumpSample" type="button">Try a sample notice</button><button class="btn primary" id="dumpGo" type="button">Find the deadline</button></div>
+        <p class="small muted" style="margin:0">Screenshots, PDFs and sharing straight from WhatsApp come with the Android app.</p>
         <div id="dumpPreview"></div>
       </div>
       <form id="paneOne" hidden style="display:flex;flex-direction:column;gap:10px">
         <label class="field"><span>What is it?</span><input type="text" id="fTitle" required maxlength="140" placeholder="Submit ML lab record"></label>
         <div class="grid2">
           <label class="field"><span>Due</span><input type="datetime-local" id="fDue"></label>
-          <label class="field"><span>Part of life</span><select id="fArea"></select></label>
+          <label class="field"><span>Kind</span><select id="fArea"></select></label>
         </div>
         <div class="grid2">
-          <label class="field"><span>If it slips…</span><select id="fImp"><option value="1">No big deal</option><option value="2" selected>It'd hurt</option><option value="3">Real consequences</option></select></label>
+          <label class="field"><span>If it slips…</span><select id="fImp"><option value="1">Low stakes · no big deal</option><option value="2" selected>Matters · it'd hurt</option><option value="3">High stakes · can't be undone</option></select></label>
           <label class="field"><span>Size</span><select id="fEff"><option value="S">Small · under 30 min</option><option value="M" selected>Medium · about an hour</option><option value="L">Big · 2+ hours</option></select></label>
         </div>
-        <div class="row-end"><button class="btn primary" type="submit">Add task</button></div>
+        <div class="grid2">
+          <label class="field"><span>What to submit, and where</span><input type="text" id="fSubmit" maxlength="120" placeholder="Upload PDF on Classroom"></label>
+          <label class="field"><span>Link</span><input type="text" id="fLink" inputmode="url" maxlength="300" placeholder="https://"></label>
+        </div>
+        <div class="row-end"><button class="btn ghost" id="oneCancel" type="button" hidden>Cancel</button><button class="btn primary" id="oneGo" type="submit">Add deadline</button></div>
       </form>
     </div>
   </section>
@@ -210,15 +218,17 @@ details summary::-webkit-details-marker{display:none}
   </section>
 
   <section class="sec" aria-labelledby="weekH">
-    <div class="sec-head"><h2 class="label" id="weekH">Your last 7 days</h2></div>
+    <div class="sec-head"><h2 class="label" id="weekH">Done and coming up</h2></div>
     <div class="card" id="week" style="display:flex;flex-direction:column;gap:16px"></div>
   </section>
 
   <section class="sec" aria-labelledby="setH">
-    <div class="sec-head"><h2 class="label" id="setH">Gentle nudges</h2></div>
+    <div class="sec-head"><h2 class="label" id="setH">Reminders and your data</h2></div>
     <div class="card settings">
-      <label class="toggle" for="nOn"><span>Remind me to drink water, move and rest my eyes while this page is open</span><input type="checkbox" id="nOn"></label>
-      <p class="small muted" style="margin:0">Nudges only appear while this page is open in a tab. Phone notifications come in the app version.</p>
+      <p class="small muted">Reminders show up here while this page is open: 3 days, 1 day and the morning of for high stakes; 1 day and 3 hours before for the rest. Notifications that reach you with the app closed come with the Android app.</p>
+      <label class="toggle" for="nOn"><span>Also nudge me to drink water, move and rest my eyes</span><input type="checkbox" id="nOn"></label>
+      <div class="toggle"><span><b>Delete my data</b><br><span class="small muted">Removes every deadline from this device and your account.</span></span><button class="btn" id="wipe" type="button">Delete everything</button></div>
+      <p class="small muted">Tula keeps only the fields you confirm, not the message you pasted, and it never reads your chats. When AI reading is on, the pasted text is sent once to pull out the deadline.</p>
       <div class="status" id="syncStatus">Saving on this device</div>
     </div>
   </section>
@@ -226,44 +236,108 @@ details summary::-webkit-details-marker{display:none}
 
 <div class="toast" id="toast" hidden role="status" aria-live="polite"><p id="toastMsg"></p><div style="display:flex;gap:6px" id="toastBtns"></div></div>
 
-<div class="calm" id="calm" hidden role="dialog" aria-modal="true" aria-labelledby="calmMsg">
-  <div class="orb" aria-hidden="true"></div>
-  <div class="hint" id="breathHint">Breathe in</div>
-  <p class="voice" id="calmMsg">Nothing else needs you right now. Just this one small step.</p>
-  <div class="card step" id="calmStep"></div>
-  <p class="small muted" id="calmRadar"></p>
-  <button class="btn ghost" id="calmClose" type="button">I'm okay now</button>
+<div class="focus" id="focus" hidden role="dialog" aria-modal="true" aria-labelledby="focusMsg">
+  <p class="voice" id="focusMsg">Just this one step. Everything else is held.</p>
+  <div class="card step" id="focusStep"></div>
+  <p class="small muted" id="focusRadar" style="margin:0"></p>
+  <button class="btn ghost" id="focusClose" type="button">Back to everything</button>
 </div>
 
 <script>
 (function(){
 const $=s=>document.getElementById(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const AREAS=['Assignment','Internship / jobs','Community','Personal','Health'];
+const AREAS=['Assignment','Internship / jobs','Hackathon','Fees / forms','Community','Personal'];
 const EFF_MIN={S:25,M:60,L:120};
-const MOOD=['Rough','Low','Okay','Good','Great'];
-const ENERGY=['Drained','Tired','Okay','Steady','Charged'];
-const STRESS=['Calm','Light','Some','Heavy','Overloaded'];
+const TIME=['Under 1 hr','1–2 hrs','2–4 hrs','Most of the day'];
+const CAP=[0,45,120,210,320];
+const STAKES={1:'Low stakes',2:'Matters',3:'High stakes'};
+const ISO_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 const LS='alm-state-v1';
+const SAMPLE='ML lab record submission by Friday 5 pm, upload on Classroom, format attached.\nhttps://classroom.google.com';
 
-let S={tasks:[],checkins:{},prefs:{nudges:true},breaks:{},updatedAt:0};
-let docRef=null, sampleFn=null, editingCI=false, draftCI=null, dumpItems=null;
+const fresh=()=>({tasks:[],checkins:{},prefs:{nudges:false},breaks:{},captures:{},updatedAt:0,v:2});
+let S=fresh();
+let docRef=null, sampleFn=null, dumpItems=null, editing=null;
+
+/* v1 state was the wellbeing prototype: keep its tasks, switch nudges off, add the deadline-record fields */
+function migrate(){
+  S.prefs=S.prefs||{}; S.checkins=S.checkins||{}; S.breaks=S.breaks||{}; S.captures=S.captures||{};
+  if((S.v||1)<2){S.prefs.nudges=false;S.v=2}
+  S.tasks=(S.tasks||[]).map(t=>Object.assign({submit:'',link:'',source:'',history:[],seen:1,reminded:[],steps:[],snoozedUntil:0},t));
+}
 
 /* ---------- time helpers ---------- */
 const pad=n=>String(n).padStart(2,'0');
 const dayKey=(d=new Date())=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const isoLocal=d=>dayKey(d)+'T'+pad(d.getHours())+':'+pad(d.getMinutes());
 const hoursUntil=t=>t.due?(new Date(t.due)-Date.now())/36e5:null;
 const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
+const clock=d=>d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+const fmtDay=v=>new Date(v).toLocaleDateString([], {weekday:'short',day:'numeric',month:'short'});
+const fmtAbs=v=>fmtDay(v)+', '+clock(new Date(v));
 function dueLabel(h,due){
-  if(h==null) return {txt:'No date',cls:'calm'};
+  if(h==null||isNaN(h)) return {txt:'No date',cls:'calm'};
   if(h<0){const d=-h; return {txt:d<24?'Overdue '+Math.max(1,Math.round(d))+'h':'Overdue '+Math.round(d/24)+'d',cls:'crit'}}
   const dd=new Date(due), now=new Date();
-  const tm=dd.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
-  if(dayKey(dd)===dayKey(now)) return {txt:'Today '+tm,cls:h<6?'crit':'warn'};
+  if(dayKey(dd)===dayKey(now)) return {txt:'Today '+clock(dd),cls:h<6?'crit':'warn'};
   const tmw=new Date(now); tmw.setDate(now.getDate()+1);
-  if(dayKey(dd)===dayKey(tmw)) return {txt:'Tomorrow '+tm,cls:'warn'};
-  if(h<24*7) return {txt:dd.toLocaleDateString([], {weekday:'short'})+' '+tm,cls:'calm'};
+  if(dayKey(dd)===dayKey(tmw)) return {txt:'Tomorrow '+clock(dd),cls:'warn'};
+  if(h<24*7) return {txt:dd.toLocaleDateString([], {weekday:'short'})+' '+clock(dd),cls:'calm'};
   return {txt:dd.toLocaleDateString([], {day:'numeric',month:'short'}),cls:'calm'};
+}
+const soonLabel=ts=>dueLabel((ts-Date.now())/36e5,ts).txt;
+
+/* ---------- dates: plain code decides, the model only proposes ---------- */
+const MON='jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?';
+const MONTHS=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+const WDAYS=['sun','mon','tue','wed','thu','fri','sat'];
+const NAMED={noon:[12,0],morning:[10,0],subah:[10,0],afternoon:[15,0],evening:[18,0],shaam:[18,0]};
+const VAGUE=/\b(soon|asap|shortly|later|jaldi?|(?:next|this) (?:week|month)|end of (?:the )?(?:week|month|sem(?:ester)?))\b/;
+/* Reads a date out of a phrase or a whole notice. status: 'ok' (due set), 'unclear' (vague words, nothing guessed), 'none'. */
+function resolveDate(text,now=new Date()){
+  let orig=' '+String(text||'')+' ', s=orig.toLowerCase(), m, hh=null, mm=0, eod=false, nextWk=false;
+  if(s.length!==orig.length) orig=s;
+  const notes=[], parts=[];
+  const cut=k=>{parts.push([k.index,orig.substr(k.index,k[0].length).trim().replace(/[.,]+$/,'')]);s=s.slice(0,k.index)+' '.repeat(k[0].length)+s.slice(k.index+k[0].length)};
+  // time of day
+  if((m=/\b(\d{1,2})(?:[:.](\d{2}))?\s*([ap])\.?m\b\.?/.exec(s))&&+m[1]>=1&&+m[1]<=12&&+(m[2]||0)<60){hh=+m[1]%12+(m[3]==='p'?12:0);mm=+(m[2]||0);cut(m)}
+  else if(m=/\b([01]?\d|2[0-3]):([0-5]\d)\b/.exec(s)){hh=+m[1];mm=+m[2];if(hh>=1&&hh<=7){hh+=12;notes.push('No AM or PM given, assumed PM.')}cut(m)}
+  else if(m=/\b(eod|end of (?:the )?day|midnight|raat)\b/.exec(s)){hh=23;mm=59;eod=m[1]!=='midnight';cut(m)}
+  else if(m=/\b(noon|morning|subah|afternoon|evening|shaam)\b/.exec(s)){[hh,mm]=NAMED[m[1]];cut(m)}
+  // the day
+  const base=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const mk=(y,mo,da)=>{const x=new Date(y,mo,da);return mo>=0&&mo<12&&x.getMonth()===mo&&x.getDate()===da?x:null};
+  const roll=(mo,da,y)=>{if(y) return mk(y<100?2000+y:y,mo,da);let x=mk(base.getFullYear(),mo,da);if(x&&base-x>60*864e5) x=mk(base.getFullYear()+1,mo,da);return x};
+  const plus=n=>{const x=new Date(base);x.setDate(x.getDate()+n);return x};
+  let d=null;
+  const tryIt=(re,fn)=>{if(d) return;const k=re.exec(s);if(!k) return;const x=fn(k);if(x){d=x;cut(k)}};
+  tryIt(/\b(\d{4})-(\d{2})-(\d{2})\b/,k=>mk(+k[1],+k[2]-1,+k[3]));
+  tryIt(new RegExp('\\b(\\d{1,2})(?:st|nd|rd|th)?\\s*(?:of\\s+)?('+MON+')\\b\\.?(?:,?\\s*(\\d{4})\\b)?'),k=>roll(MONTHS.indexOf(k[2].slice(0,3)),+k[1],+k[3]||0));
+  tryIt(new RegExp('\\b('+MON+')\\b\\.?\\s*(\\d{1,2})(?:st|nd|rd|th)?\\b(?:,?\\s*(\\d{4})\\b)?'),k=>roll(MONTHS.indexOf(k[1].slice(0,3)),+k[2],+k[3]||0));
+  tryIt(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/,k=>roll(+k[2]-1,+k[1],+k[3]||0));      // DD/MM, the Indian order
+  tryIt(/\b(\d{1,2})-(\d{1,2})-(\d{2,4})\b/,k=>roll(+k[2]-1,+k[1],+k[3]));
+  tryIt(/\b(day after tomorrow|parson?)\b/,()=>plus(2));
+  tryIt(/\b(tomorrow|tmrw|tmr|kal)\b/,()=>plus(1));
+  tryIt(/\b(today|tonight|aaj)\b/,()=>plus(0));
+  tryIt(/\b(?:(next|this|coming)\s+)?(mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?|sun)(?:day)?\b/,k=>{
+    const target=WDAYS.indexOf(k[2].slice(0,3)), wd=base.getDay(); let diff=(target-wd+7)%7;
+    if(k[1]==='next'||/\bnext week\b/.test(s)){diff=7-(wd+6)%7+(target+6)%7;nextWk=true}
+    else if(diff===0&&hh!=null&&hh*60+mm<=now.getHours()*60+now.getMinutes()) diff=7;
+    return plus(diff)});
+  if(!d){
+    const v=VAGUE.exec(s);
+    if(eod) d=base;
+    else if(v) return {due:'',status:'unclear',phrase:orig.substr(v.index,v[0].length),parts:[],notes:['Date unclear. Set it yourself.']};
+    else if(hh!=null){const passed=hh*60+mm<=now.getHours()*60+now.getMinutes();d=plus(passed?1:0);notes.push('No day given, assumed '+(passed?'tomorrow':'today')+'.')}
+    else return {due:'',status:'none',phrase:'',parts:[],notes:[]};
+  }
+  d.setHours(hh==null?23:hh,hh==null?59:mm,0,0);
+  if(nextWk) notes.push('“Next” read as '+fmtDay(d)+'. Check it.');
+  if(d<now) notes.push('This date has already passed.');
+  parts.sort((a,b)=>a[0]-b[0]);
+  const p=parts.map(x=>x[1]);
+  return {due:isoLocal(d),status:'ok',phrase:p.join(' '),parts:p,notes};
 }
 
 /* ---------- storage ---------- */
@@ -283,98 +357,148 @@ const status=t=>{$('syncStatus').textContent=t};
 
 /* ---------- planning engine ---------- */
 function openTasks(){const now=Date.now();return S.tasks.filter(t=>!t.done&&!(t.snoozedUntil&&t.snoozedUntil>now))}
-function todayCI(){return S.checkins[dayKey()]||null}
-function isLow(ci){return !!ci&&(ci.energy<=2||ci.stress>=4)}
+function todayCI(){const c=S.checkins[dayKey()];return c&&c.time?c:null}
 function score(t,ci){
   const h=hoursUntil(t);
   const u=h==null?0.15:h<=0?1.15:1/(1+h/24);          // urgency: 1 at deadline, .5 a day out
   const i=t.imp/3;                                     // what it costs if it slips
   const e={S:0,M:.5,L:1}[t.effort]??.5;
-  const en=ci?(ci.energy-1)/4:.5;
-  let fit=1-Math.abs(e-en);                            // energy-to-effort match
-  if(ci&&ci.stress>=4&&t.effort==='L') fit-=.3;
-  const age=Math.min(.15,((Date.now()-t.created)/864e5)*.03); // stops old tasks fading away
+  const fit=ci?1-Math.abs(e-(ci.time-1)/3):.5;         // size of the task against the time you have
+  const age=Math.min(.15,((Date.now()-t.created)/864e5)*.03); // stops old items fading away
   return .45*u+.35*i+.2*fit+age;
 }
 function planDay(){
-  const ci=todayCI(), low=isLow(ci);
-  const n=low?2:3;
-  const cap=ci?[0,60,100,170,240,320][ci.energy]:180;
+  const ci=todayCI(), short=!!ci&&ci.time===1;
+  const n=short?2:3;
+  const cap=ci?CAP[ci.time]:180;
   const open=openTasks().map(t=>({t,s:score(t,ci),h:hoursUntil(t)}));
   const must=open.filter(o=>o.h!=null&&o.h<=24).sort((a,b)=>a.h-b.h);
   const rest=open.filter(o=>!must.includes(o)).sort((a,b)=>b.s-a.s);
   const picks=[]; let mins=0;
-  for(const o of must){ if(picks.length>=n) break; picks.push(o); mins+=load(o.t,low); }
-  for(const o of rest){ if(picks.length>=n) break; const m=load(o.t,low); if(picks.length&&mins+m>cap) continue; picks.push(o); mins+=m; }
-  return {picks,mins,cap,low,ci,overflow:Math.max(0,must.length-n)};
+  for(const o of must){ if(picks.length>=n) break; picks.push(o); mins+=load(o.t,short); }
+  for(const o of rest){ if(picks.length>=n) break; const m=load(o.t,short); if(picks.length&&mins+m>cap) continue; picks.push(o); mins+=m; }
+  return {picks,mins,cap,short,ci,overflow:Math.max(0,must.length-n)};
 }
-function load(t,low){return low&&t.effort==='L'?25:EFF_MIN[t.effort]||60}
-function reason(o,low){
+function load(t,short){return short&&t.effort==='L'?25:EFF_MIN[t.effort]||60}
+function reason(o,short){
   const t=o.t,h=o.h;
-  if(h!=null&&h<0) return 'This one slipped past its deadline. Closing it today takes the weight off.';
-  if(h!=null&&h<=24) return 'Due within a day, so it goes first. Everything else can wait.';
-  if(low&&t.effort==='L') return 'Big one, so today you only do the first 25 minutes. That counts.';
-  if(low&&t.effort==='S') return 'Small and doable, even on a low day.';
-  if(t.imp===3) return 'Real consequences if it slips, so we keep it moving.';
-  if(!low&&t.effort==='L') return 'You have fuel today. Good moment for deep work.';
+  if(h!=null&&h<0) return 'Past its deadline. Close it today, or check whether it was extended.';
+  if(h!=null&&h<=24) return 'Due within a day, so it goes first.';
+  if(short&&t.effort==='L') return 'Big one and time is short. Today, just the first 25 minutes.';
+  if(t.imp===3) return 'High stakes. A miss here can’t be undone, so it keeps moving.';
   if(h!=null&&h<=72) return 'Due soon. A little today keeps it from becoming a scramble.';
-  return 'A good fit for how you’re feeling today.';
+  if(short&&t.effort==='S') return 'Small enough to fit the time you have.';
+  return 'Next most important thing on your list.';
 }
-function headline(ci){
-  if(!ci) return 'Check in first and I’ll shape today around how you actually feel.';
-  if(ci.stress>=4&&ci.energy<=2) return 'You’re not behind. You’re overloaded. Today we only do what truly matters.';
-  if(ci.stress>=4) return 'A lot is pressing on you. Let’s shrink today down to what matters.';
-  if(ci.energy<=2) return 'Low battery day. Let’s take a lighter path.';
-  if(ci.energy>=4&&ci.stress<=2) return 'You’ve got fuel and room to think. Good day for one deep piece of work.';
-  return 'A steady day. Three things, one at a time.';
+function summary(){
+  if(!S.tasks.length) return 'Nothing saved yet. Send Tula a notice and it keeps the deadline for you.';
+  const open=S.tasks.filter(t=>!t.done);
+  if(!open.length) return 'All clear. Everything you saved is done.';
+  const hs=open.map(hoursUntil), over=hs.filter(h=>h!=null&&h<0).length, soon=hs.filter(h=>h!=null&&h>=0&&h<=72).length;
+  const moved=open.filter(t=>(t.history||[]).some(x=>Date.now()-x.at<7*864e5)).length;
+  let s=soon?soon+' due in the next 72 hours':'Nothing due in the next 72 hours';
+  if(over) s+=', '+over+' overdue';
+  return s+'.'+(moved?' '+moved+' moved this week.':'');
+}
+
+/* ---------- the deadline record: repeats, extensions, reminders ---------- */
+const STOP=new Set('the a an of for to by on in and your please example is are at with from'.split(' '));
+const toks=s=>new Set(String(s).toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).map(w=>w==='submission'?'submit':w.replace(/s$/,'')).filter(w=>w.length>1&&!STOP.has(w)));
+function sim(a,b){const A=toks(a),B=toks(b);if(!A.size||!B.size) return 0;let n=0;A.forEach(w=>{if(B.has(w))n++});return n/(A.size+B.size-n)}
+/* Is this the same deadline as one already saved? 'same' = same date (or no new date), 'moved' = the date differs. */
+function findDup(x,skipId){
+  let best=null,bs=0;
+  for(const t of S.tasks){
+    if(t.done||t.id===skipId) continue;
+    const s=sim(x.title,t.title);
+    if((s>=.6||(x.link&&x.link===t.link&&s>=.25))&&s>bs){best=t;bs=s}
+  }
+  return best?{t:best,kind:!x.due||x.due===best.due?'same':'moved'}:null;
+}
+function reminderTimes(t){
+  if(!t.due) return [];
+  const d=+new Date(t.due); if(isNaN(d)) return [];
+  if(t.imp===3){const m=new Date(d);m.setHours(9,0,0,0);return [[d-72*36e5,'3 days before'],[d-24*36e5,'1 day before'],[+m,'morning of']].filter(r=>r[0]<d).sort((a,b)=>a[0]-b[0])}
+  return [[d-24*36e5,'1 day before'],[d-3*36e5,'3 hours before']];
+}
+/* Reminders already in the past when a deadline is saved or moved are skipped, except the last one if none are left, so a deadline saved late still gets one heads-up. */
+function armReminders(t){
+  const now=Date.now(), rs=reminderTimes(t), past=rs.filter(r=>r[0]<=now);
+  t.reminded=(past.length<rs.length?past:past.slice(0,-1)).map(r=>r[0]);
+}
+function moveDue(t,due,src){
+  if(t.due) t.history.push({due:t.due,at:Date.now()});
+  t.due=due; t.snoozedUntil=0; if(src) t.source=src; armReminders(t);
+}
+function remindTick(){
+  if(!$('toast').hidden||!$('focus').hidden) return false;
+  const now=Date.now();
+  for(const t of S.tasks){
+    if(t.done||!t.due) continue;
+    const d=+new Date(t.due); if(!(d>now)) continue;
+    const hit=reminderTimes(t).filter(r=>r[0]<=now&&!(t.reminded||[]).includes(r[0]));
+    if(!hit.length) continue;
+    t.reminded=(t.reminded||[]).concat(hit.map(r=>r[0])); save(); render();
+    toast('Reminder: “'+t.title+'” is due '+soonLabel(d).replace(/^T/,'t')+'.',[['Done',()=>markDone(t)],['OK',hideToast,true]]);
+    return true;
+  }
+  return false;
+}
+function remLine(t){
+  if(t.done||!t.due) return '';
+  const now=Date.now(), d=+new Date(t.due); if(!(d>now)) return '';
+  const up=reminderTimes(t).filter(r=>r[0]>now&&!(t.reminded||[]).includes(r[0]));
+  return up.length?'Reminders: '+up.map(r=>r[0]-now<7*864e5?soonLabel(r[0]):fmtAbs(r[0])).join(' · '):'Reminders sent';
+}
+function badges(t){
+  const h=t.history||[], last=h[h.length-1];
+  return (last?`<span class="pill moved" title="Was due ${esc(fmtAbs(last.due))}">Moved from ${esc(fmtDay(last.due))}</span>`:'')+((t.seen||1)>1?`<span class="pill">Seen ${t.seen} times</span>`:'');
+}
+function details(t){
+  const out=[];
+  if(t.submit) out.push(`<div class="small"><b>Submit:</b> ${esc(t.submit)}</div>`);
+  if(t.link){let host='';try{host=new URL(t.link).hostname}catch(e){} out.push(`<div class="small"><a href="${esc(t.link)}" target="_blank" rel="noopener noreferrer">Open link${host?' ('+esc(host)+')':''}</a></div>`)}
+  const r=remLine(t); if(r) out.push(`<div class="small muted">${esc(r)}</div>`);
+  return out.length?`<div class="det">${out.join('')}</div>`:'';
 }
 
 /* ---------- render ---------- */
 function render(){
-  const now=new Date();
-  const hr=now.getHours();
+  const now=new Date(), hr=now.getHours();
   $('today').textContent=(hr<5?'Still up?':hr<12?'Good morning':hr<17?'Good afternoon':'Good evening')+' · '+now.toLocaleDateString([], {weekday:'long',day:'numeric',month:'long'});
-  renderCheckin(); renderPlan(); renderRadar(); renderList(); renderWeek();
+  renderDue(); renderPlan(); renderRadar(); renderList(); renderWeek();
   $('nOn').checked=!!S.prefs.nudges;
 }
-function scaleRow(key,labels,val){
-  return `<div class="ci-row"><span class="small" style="font-weight:600">${key[0].toUpperCase()+key.slice(1)}</span><div class="scale" role="group" aria-label="${key}">${labels.map((l,i)=>`<button type="button" data-k="${key}" data-v="${i+1}" aria-pressed="${val===i+1}">${l}</button>`).join('')}</div></div>`;
-}
-function renderCheckin(){
-  const ci=todayCI(), box=$('checkin');
-  if(ci&&!editingCI){
-    box.innerHTML=`<div class="ci-sum"><div class="min"><p class="voice" style="margin:0 0 8px">${esc(headline(ci))}</p><div class="pills"><span class="pill">Mood: ${MOOD[ci.mood-1]}</span><span class="pill">Energy: ${ENERGY[ci.energy-1]}</span><span class="pill">Stress: ${STRESS[ci.stress-1]}</span></div></div><button class="btn ghost" id="ciEdit" type="button">Update</button></div>`;
-    $('ciEdit').onclick=()=>{editingCI=true;draftCI={...ci};renderCheckin()};
-    return;
-  }
-  const d=draftCI||(draftCI={mood:0,energy:0,stress:0,note:''});
-  box.innerHTML=`<div class="ci-form">${scaleRow('mood',MOOD,d.mood)}${scaleRow('energy',ENERGY,d.energy)}${scaleRow('stress',STRESS,d.stress)}
-  <label class="field"><span>Anything on your mind? (optional, stays private)</span><textarea id="ciNote" rows="2" maxlength="600">${esc(d.note)}</textarea></label>
-  <div class="row-end"><button class="btn primary" id="ciSave" type="button" ${d.mood&&d.energy&&d.stress?'':'disabled'}>Plan my day</button></div></div>`;
-  box.querySelectorAll('.scale button').forEach(b=>b.onclick=()=>{d[b.dataset.k]=+b.dataset.v;d.note=$('ciNote').value;renderCheckin()});
-  $('ciSave').onclick=()=>{
-    d.note=$('ciNote').value.trim(); d.at=Date.now();
-    S.checkins[dayKey()]={...d}; editingCI=false; draftCI=null; save(); render();
-    if(d.stress>=4) setTimeout(()=>toast('That sounds heavy. Want to switch to calm mode for a minute?',[['Yes, calm mode',openCalm,true],['Not now',hideToast]]),400);
-  };
+function renderDue(){
+  const ci=todayCI();
+  $('due').innerHTML=`<p class="voice" style="margin:0 0 14px">${esc(summary())}</p>
+  <div class="time-q"><span class="small" style="font-weight:600">Time today? <span class="muted" style="font-weight:400">optional</span></span>
+  <div class="scale" role="group" aria-label="How much time do you have today?">${TIME.map((l,i)=>`<button type="button" data-time="${i+1}" aria-pressed="${!!ci&&ci.time===i+1}">${l}</button>`).join('')}</div></div>`;
+  $('due').querySelectorAll('[data-time]').forEach(b=>b.onclick=()=>{
+    const v=+b.dataset.time;
+    if(ci&&ci.time===v) delete S.checkins[dayKey()]; else S.checkins[dayKey()]={time:v,at:Date.now()};
+    save(); render();
+  });
 }
 function renderPlan(){
   const p=planDay(), el=$('plan');
-  $('capNote').textContent=p.picks.length?`about ${fmtMin(p.mins)} of focus`:'';
+  $('focusOpen').hidden=!p.picks.length;
   if(!S.tasks.length){
-    el.innerHTML=`<div class="empty"><p class="voice" style="margin:0">Your plate is empty here, which is a good place to start.</p><p class="muted" style="margin:0">Dump everything that's on your mind below. I'll sort it, and pick the 2 or 3 that matter today.</p><button class="btn" id="loadEx" type="button">Try it with an example week</button></div>`;
+    el.innerHTML=`<div class="empty"><p class="voice" style="margin:0">No deadlines here yet.</p><p class="muted" style="margin:0">Paste a notice from one of your groups below. Tula keeps the date, what to submit and the link, and picks the 2 or 3 things that matter today.</p><button class="btn" id="loadEx" type="button">Try it with an example week</button></div>`;
     $('loadEx').onclick=loadExamples; return;
   }
-  if(!p.picks.length){el.innerHTML=`<div class="empty"><p class="voice" style="margin:0">Nothing needs you today.</p><p class="muted" style="margin:0">Rest is part of the plan. Seriously.</p></div>`;return}
-  el.innerHTML=p.picks.map((o,i)=>pickHTML(o,i,p.low)).join('')+(p.overflow?`<p class="small muted" style="margin:0">${p.overflow} more due within a day. They're on the radar below; finish these first.</p>`:'');
+  if(!p.picks.length){el.innerHTML=`<div class="empty"><p class="voice" style="margin:0">Nothing needs you today.</p><p class="muted" style="margin:0">Everything open is either done or set aside until tomorrow.</p></div>`;return}
+  el.innerHTML=p.picks.map((o,i)=>pickHTML(o,i,p.short)).join('')+
+    `<p class="small muted" style="margin:0">About ${fmtMin(p.mins)} of work.${p.overflow?` ${p.overflow} more due within a day. ${p.overflow>1?'They’re':'It’s'} on the radar below; finish these first.`:''}</p>`;
   bindTaskButtons(el);
 }
-function pickHTML(o,i,low){
+function pickHTML(o,i,short){
   const t=o.t, dl=dueLabel(o.h,t.due);
   const steps=(t.steps||[]).map((s,j)=>`<li><label><input type="checkbox" data-step="${t.id}:${j}" ${s.done?'checked':''}><span class="${s.done?'done-t':''}">${esc(s.text)}</span></label></li>`).join('');
-  return `<article class="pick ${i===0?'first':''}"><span class="num">${pad(i+1)}</span><div class="min"><h3>${esc(t.title)}</h3><p class="why">${esc(reason(o,low))}</p>
-  <div class="meta"><span class="chip ${dl.cls}">${dl.txt}</span><span class="pill a${Math.max(0,AREAS.indexOf(t.area))}">${esc(t.area)}</span><span class="pill">${{S:'Small',M:'~1 hr',L:'Big'}[t.effort]}</span></div>
-  ${steps?`<ul class="steps">${steps}</ul>`:(sampleFn?`<div style="margin-top:8px"><button class="linkbtn" data-shrink="${t.id}" type="button">Feels too big? Break it into tiny steps</button></div>`:'')}
+  return `<article class="pick ${i===0?'first':''}"><span class="num">${pad(i+1)}</span><div class="min"><h3>${esc(t.title)}</h3><p class="why">${esc(reason(o,short))}</p>
+  <div class="meta"><span class="chip ${dl.cls}">${dl.txt}</span><span class="pill a${Math.max(0,AREAS.indexOf(t.area))}">${esc(t.area)}</span><span class="pill">${STAKES[t.imp]||'Matters'}</span><span class="pill">${{S:'Small',M:'~1 hr',L:'Big'}[t.effort]}</span>${badges(t)}</div>
+  ${details(t)}${steps?`<ul class="steps">${steps}</ul>`:''}
+  <div class="acts"><button class="linkbtn" data-edit="${t.id}" type="button">Edit</button>${!steps&&sampleFn?`<button class="linkbtn" data-shrink="${t.id}" type="button">Break it into tiny steps</button>`:''}</div>
   </div><button class="tick" data-done="${t.id}" type="button" aria-label="Mark done: ${esc(t.title)}"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></article>`;
 }
 function renderRadar(){
@@ -382,8 +506,8 @@ function renderRadar(){
   const snoozedSoon=S.tasks.filter(t=>!t.done&&t.snoozedUntil>Date.now()&&hoursUntil(t)!=null&&hoursUntil(t)<=72);
   const el=$('radar');
   if(!items.length&&!snoozedSoon.length){el.innerHTML=`<p class="muted" style="margin:0">Clear skies. Nothing due in the next three days.</p>`;return}
-  el.innerHTML=`<div class="radar">${items.map(o=>{const dl=dueLabel(o.h,o.t.due);return `<div class="r-item"><span class="chip ${dl.cls}">${dl.txt}</span><span class="r-title">${esc(o.t.title)}</span><button class="icon" data-done="${o.t.id}" type="button">Done</button></div>`}).join('')}</div>`+
-   (snoozedSoon.length?`<p class="small muted" style="margin:10px 0 0">${snoozedSoon.length} snoozed task${snoozedSoon.length>1?'s are':' is'} still due soon. Snoozing hides it from today's plan, never from here.</p>`:'');
+  el.innerHTML=`<div class="radar">${items.map(o=>{const dl=dueLabel(o.h,o.t.due),b=badges(o.t);return `<div class="r-item"><span class="chip ${dl.cls}">${dl.txt}</span><div class="min"><div class="r-title">${esc(o.t.title)}</div>${b?`<div class="meta" style="margin-top:4px">${b}</div>`:''}</div><button class="icon" data-done="${o.t.id}" type="button">Done</button></div>`}).join('')}</div>`+
+   (snoozedSoon.length?`<p class="small muted" style="margin:10px 0 0">${snoozedSoon.length} set aside for today ${snoozedSoon.length>1?'are':'is'} still due soon. “Not today” hides it from today’s picks, never from here.</p>`:'');
   bindTaskButtons(el);
 }
 function renderList(){
@@ -391,114 +515,230 @@ function renderList(){
   const open=S.tasks.filter(t=>!t.done&&!planIds.has(t.id)).sort((a,b)=>score(b,ci)-score(a,ci));
   const done=S.tasks.filter(t=>t.done).sort((a,b)=>b.doneAt-a.doneAt);
   $('allCount').textContent=open.length?open.length+' waiting':'';
-  $('list').innerHTML=open.length?open.map(t=>{const h=hoursUntil(t),dl=dueLabel(h,t.due),sn=t.snoozedUntil>Date.now();
-    return `<div class="l-item"><span class="chip ${dl.cls}">${dl.txt}</span><div class="min"><div class="r-title">${esc(t.title)}</div><div class="small muted">${esc(t.area)}${sn?' · snoozed till tomorrow':''}</div></div>
-    <div class="l-act">${sn?`<button class="icon" data-wake="${t.id}" type="button">Wake</button>`:`<button class="icon" data-snooze="${t.id}" type="button">Not today</button>`}<button class="icon" data-done="${t.id}" type="button">Done</button><button class="icon danger" data-del="${t.id}" type="button">Delete</button></div></div>`}).join('')
-    :`<p class="muted" style="margin:0">Nothing else. Everything open is in today's plan.</p>`;
+  $('list').innerHTML=open.length?open.map(t=>{const h=hoursUntil(t),dl=dueLabel(h,t.due),sn=t.snoozedUntil>Date.now(),b=badges(t);
+    return `<div class="l-item"><span class="chip ${dl.cls}">${dl.txt}</span><div class="min"><div class="r-title">${esc(t.title)}</div><div class="small muted">${esc(t.area)} · ${STAKES[t.imp]||'Matters'}${sn?' · back tomorrow':''}</div>${b?`<div class="meta" style="margin-top:6px">${b}</div>`:''}${details(t)}</div>
+    <div class="l-act">${sn?`<button class="icon" data-wake="${t.id}" type="button">Bring back</button>`:`<button class="icon" data-snooze="${t.id}" type="button">Not today</button>`}<button class="icon" data-edit="${t.id}" type="button">Edit</button><button class="icon" data-done="${t.id}" type="button">Done</button><button class="icon danger" data-del="${t.id}" type="button">Delete</button></div></div>`}).join('')
+    :`<p class="muted" style="margin:0">${S.tasks.some(t=>!t.done)?'Nothing else. Everything open is in today’s picks.':'Nothing waiting.'}</p>`;
   $('doneWrap').hidden=!done.length;
   $('doneSum').textContent=`Done (${done.length}) · show`;
-  $('doneList').innerHTML=done.slice(0,30).map(t=>`<div class="l-item"><span class="chip calm">${new Date(t.doneAt).toLocaleDateString([], {day:'numeric',month:'short'})}</span><span class="done-t min">${esc(t.title)}</span><button class="icon" data-undo="${t.id}" type="button">Undo</button></div>`).join('');
+  $('doneList').innerHTML=done.slice(0,30).map(t=>`<div class="l-item"><span class="chip calm">${new Date(t.doneAt).toLocaleDateString([], {day:'numeric',month:'short'})}</span><span class="done-t min">${esc(t.title)}</span><div class="l-act"><button class="icon" data-undo="${t.id}" type="button">Undo</button></div></div>`).join('');
   bindTaskButtons($('list')); bindTaskButtons($('doneList'));
 }
 function renderWeek(){
   const days=[]; for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(d)}
-  const doneBy=k=>S.tasks.filter(t=>t.done&&dayKey(new Date(t.doneAt))===k).length;
-  const counts=days.map(d=>doneBy(dayKey(d))), max=Math.max(1,...counts);
-  const cis=days.map(d=>S.checkins[dayKey(d)]).filter(Boolean);
-  const heavy=cis.filter(c=>c.stress>=4).length;
-  const avgE=cis.length?(cis.reduce((a,c)=>a+c.energy,0)/cis.length):0;
-  const breaks=days.reduce((a,d)=>a+(S.breaks[dayKey(d)]||0),0);
+  const counts=days.map(d=>{const k=dayKey(d);return S.tasks.filter(t=>t.done&&dayKey(new Date(t.doneAt))===k).length}), max=Math.max(1,...counts);
   const total=counts.reduce((a,b)=>a+b,0);
-  let line;
-  if(!cis.length&&!total) line='Your week will show up here once you start checking in. No grades, just patterns.';
-  else if(heavy>=3) line=`This week looked heavier than usual, ${heavy} overloaded days. You still kept moving. Next week, let's protect one evening for recovery.`;
-  else if(cis.length&&avgE<2.5) line='Your energy ran low most days. Try putting the hardest task before lunch next week, and sleeping before midnight twice.';
-  else if(total&&breaks<3) line=`You finished ${total} thing${total>1?'s':''} but took very few breaks. Turn on nudges below; a 2-minute pause is not slacking.`;
-  else line=`${total} thing${total===1?'':'s'} done, ${cis.length} check-in${cis.length===1?'':'s'}. That's a steady week. Keep the pace that kept you okay.`;
+  const captured=days.reduce((a,d)=>a+(S.captures[dayKey(d)]||0),0);
+  const open=S.tasks.filter(t=>!t.done);
+  const coming=open.filter(t=>{const h=hoursUntil(t);return h!=null&&h>=0&&h<=168}).length;
+  const moved=S.tasks.filter(t=>(t.history||[]).some(x=>Date.now()-x.at<7*864e5)).length;
+  const line=!S.tasks.length?'Your week shows up here once you start saving deadlines.':`${total} finished this week, ${coming} coming up in the next 7 days.`;
   $('week').innerHTML=`<p class="voice" style="margin:0;font-size:18px">${esc(line)}</p>
-  <div class="stats"><div class="stat"><b>${total}</b><span>tasks finished</span></div><div class="stat"><b>${cis.length}/7</b><span>check-ins</span></div><div class="stat"><b>${heavy}</b><span>overloaded days</span></div><div class="stat"><b>${breaks}</b><span>breaks taken</span></div></div>
-  <div><div class="small muted">Tasks finished per day</div><div class="bars">${days.map((d,i)=>`<div class="bar" title="${counts[i]} done"><i class="${counts[i]?(i===6?'hi':''):'none'}" style="height:${counts[i]?Math.max(10,counts[i]/max*48):6}px"></i><small>${d.toLocaleDateString([], {weekday:'narrow'})}</small></div>`).join('')}</div></div>`;
+  <div class="stats"><div class="stat"><b>${total}</b><span>finished</span></div><div class="stat"><b>${captured}</b><span>saved this week</span></div><div class="stat"><b>${coming}</b><span>due in 7 days</span></div><div class="stat"><b>${moved}</b><span>dates moved</span></div></div>
+  <div><div class="small muted">Finished per day</div><div class="bars">${days.map((d,i)=>`<div class="bar" title="${counts[i]} done"><i class="${counts[i]?(i===6?'hi':''):'none'}" style="height:${counts[i]?Math.max(10,counts[i]/max*48):6}px"></i><small>${d.toLocaleDateString([], {weekday:'narrow'})}</small></div>`).join('')}</div></div>`;
 }
 function fmtMin(m){return m<60?m+' min':(m/60).toFixed(m%60?1:0)+' hr'}
 
 /* ---------- task actions ---------- */
 const byId=id=>S.tasks.find(t=>t.id===id);
+function markDone(t){t.done=true;t.doneAt=Date.now();save();render();
+  toast(cheer(),[['Undo',()=>{t.done=false;save();render();hideToast()}]],5000)}
 function bindTaskButtons(root){
-  root.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{const t=byId(b.dataset.done);if(!t)return;t.done=true;t.doneAt=Date.now();save();render();
-    toast(cheer(),[['Undo',()=>{t.done=false;save();render();hideToast()}]],5000)});
+  root.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{const t=byId(b.dataset.done);if(t)markDone(t)});
   root.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>{const t=byId(b.dataset.undo);t.done=false;save();render()});
   root.querySelectorAll('[data-snooze]').forEach(b=>b.onclick=()=>{const t=byId(b.dataset.snooze);const d=new Date();d.setDate(d.getDate()+1);d.setHours(5,0,0,0);t.snoozedUntil=+d;save();render();
-    toast('Moved off today. If its deadline gets close, it stays on the radar.',[],3500)});
+    toast('Off today’s picks. It stays on the radar and you’ll still get its reminders.',[],3500)});
   root.querySelectorAll('[data-wake]').forEach(b=>b.onclick=()=>{byId(b.dataset.wake).snoozedUntil=0;save();render()});
   root.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
-    if(b.dataset.armed){S.tasks=S.tasks.filter(t=>t.id!==b.dataset.del);save();render();return}
+    if(b.dataset.armed){S.tasks=S.tasks.filter(t=>t.id!==b.dataset.del);if(editing===b.dataset.del)stopEdit();save();render();return}
     b.dataset.armed='1';b.textContent='Sure?';setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent='Delete'}},3000)});
   root.querySelectorAll('[data-step]').forEach(c=>c.onchange=()=>{const [id,j]=c.dataset.step.split(':');const t=byId(id);t.steps[+j].done=c.checked;
     if(t.steps.every(s=>s.done)){t.done=true;t.doneAt=Date.now();toast(cheer(),[],4000)} save();render()});
   root.querySelectorAll('[data-shrink]').forEach(b=>b.onclick=()=>shrink(byId(b.dataset.shrink),b));
+  root.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>startEdit(byId(b.dataset.edit)));
 }
-const CHEERS=['Done. One less thing living in your head.','That’s handled. Breathe out.','Nice. You showed up for yourself there.','Off the list. Take a sip of water before the next one.'];
+const CHEERS=['Done. One less deadline to carry.','Handled. That one can’t be missed now.','Off the list.','Done, and on time.'];
 const cheer=()=>CHEERS[Math.floor(Math.random()*CHEERS.length)];
-function addTask(o){S.tasks.push({id:uid(),title:String(o.title).slice(0,140),due:o.due||'',imp:[1,2,3].includes(+o.imp)?+o.imp:2,effort:['S','M','L'].includes(o.effort)?o.effort:'M',area:AREAS.includes(o.area)?o.area:'Personal',done:false,created:Date.now(),steps:[],snoozedUntil:0})}
+function addTask(o){
+  const t={id:uid(),title:String(o.title).slice(0,140),due:ISO_RE.test(o.due||'')?o.due:'',imp:[1,2,3].includes(+o.imp)?+o.imp:2,effort:['S','M','L'].includes(o.effort)?o.effort:'M',area:AREAS.includes(o.area)?o.area:'Personal',
+    submit:String(o.submit||'').slice(0,120),link:cleanLink(o.link),source:String(o.when||'').slice(0,80),history:o.history||[],seen:1,reminded:[],done:false,created:Date.now(),steps:[],snoozedUntil:0};
+  armReminders(t); S.tasks.push(t); return t;
+}
+const bump=n=>{const k=dayKey();S.captures[k]=(S.captures[k]||0)+n};
 function loadExamples(){
-  const at=(days,h,m)=>{const d=new Date();d.setDate(d.getDate()+days);d.setHours(h,m||0,0,0);return dayKey(d)+'T'+pad(h)+':'+pad(m||0)};
-  [['Example: Submit DBMS assignment',at(0,23,59),3,'M','Assignment'],['Example: Reply to internship HR about offer letter',at(1,12),3,'S','Internship / jobs'],
-   ['Example: Design poster for community meetup',at(2,18),2,'L','Community'],['Example: Revise unit 3 for ML quiz',at(4,9),2,'L','Assignment'],
-   ['Example: Update resume with hackathon project','',2,'M','Internship / jobs'],['Example: Call home','',1,'S','Personal']].forEach(([title,due,imp,effort,area])=>addTask({title,due,imp,effort,area}));
-  save();render();toast('Loaded 6 example tasks. Delete them anytime and add your own.',[],4000);
+  const at=(days,h,m)=>{const d=new Date();d.setDate(d.getDate()+days);d.setHours(h,m||0,0,0);return isoLocal(d)};
+  [{title:'Example: Submit DBMS assignment',due:at(0,23,59),imp:3,effort:'M',area:'Assignment',submit:'Upload PDF on Classroom'},
+   {title:'Example: Reply to internship HR about offer letter',due:at(1,12),imp:3,effort:'S',area:'Internship / jobs',submit:'Email the signed letter'},
+   {title:'Example: Register team for campus hackathon',due:at(2,18),imp:3,effort:'S',area:'Hackathon',submit:'Team registration form'},
+   {title:'Example: Pay exam fee',due:at(5,17),imp:3,effort:'S',area:'Fees / forms',history:[{due:at(3,17),at:Date.now()}]},
+   {title:'Example: Revise unit 3 for ML quiz',due:at(4,9),imp:2,effort:'L',area:'Assignment'},
+   {title:'Example: Update resume with hackathon project',due:'',imp:2,effort:'M',area:'Internship / jobs'}].forEach(addTask);
+  save();render();toast('Loaded 6 example deadlines. Delete them anytime and add your own.',[],4000);
 }
 
-/* ---------- capture ---------- */
+/* ---------- capture: paste a notice ---------- */
+const URL_RE=/https?:\/\/[^\s<>"')\]]+/i;
+function cleanLink(u){u=String(u||'').trim().replace(/[.,;:!?]+$/,'');return /^https?:\/\/\S+$/i.test(u)?u.slice(0,300):''}
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const cap1=s=>s?s[0].toUpperCase()+s.slice(1):s;
+function guess(b){
+  const s=b.toLowerCase();
+  if(/intern|offer letter|placement|recruit|\bjob\b|\bhr\b/.test(s)) return ['Internship / jobs',3];
+  if(/hackathon|competition|contest|ideathon/.test(s)) return ['Hackathon',3];
+  if(/\bfees?\b|scholarship|registration|\bform\b/.test(s)) return ['Fees / forms',3];
+  if(/assignment|\blab\b|record|submission|quiz|exam|viva|project|practical|classroom/.test(s)) return ['Assignment',/exam|viva/.test(s)?3:2];
+  if(/society|club|meetup|event|community|chapter/.test(s)) return ['Community',2];
+  return ['Personal',2];
+}
+/* No AI: one paragraph is one deadline. Code reads the date and the link; the student checks the rest. */
+function extractLocal(txt,now){
+  return txt.split(/\n\s*\n/).map(b=>b.trim()).filter(Boolean).slice(0,25).map(b=>{
+    const r=resolveDate(b,now), link=cleanLink((URL_RE.exec(b)||[''])[0]), plain=b.replace(URL_RE,' ');
+    let title=(plain.split(/\n|[.!?]\s+(?=[A-Z])/).map(x=>x.trim()).find(x=>x.length>2))||plain;
+    const idx=r.parts.map(p=>title.toLowerCase().indexOf(p.toLowerCase())).filter(i=>i>=0).sort((a,c)=>a-c)[0];
+    if(idx>=8) title=title.slice(0,idx);
+    else r.parts.forEach(p=>{title=title.replace(new RegExp(reEsc(p),'i'),' ')});
+    title=title.replace(/\s+/g,' ');
+    let prev; do{prev=title;title=title.replace(/^[\s*_~>•\-–:!]+/,'').replace(/^(reminder|notice|important|urgent|attention|update|fwd|forwarded|by|on|before|till|until)\b[\s:!\-–]*/i,'')
+      .replace(/[\s,;:.\-–]+$/,'').replace(/\s+(by|on|before|till|until|due|is|at|tak|to|now|extended|postponed|preponed|moved|shifted|rescheduled)$/i,'')}while(title!==prev);
+    if(title.length<3) title=plain.replace(/\s+/g,' ').trim();
+    const sm=/\b(upload|e-?mail|send|fill|register|pay|apply)\b[^.\n!?]*/i.exec(plain);
+    let submit=sm?sm[0].replace(/[\s:,\-–]+$/,'').trim().slice(0,120):'';
+    if(submit&&title.toLowerCase().includes(submit.toLowerCase())) submit='';
+    const [area,imp]=guess(b);
+    return {title:cap1(title).slice(0,140),due:r.due,when:r.phrase,flag:r.notes.join(' '),submit:cap1(submit),link,imp,effort:'M',area};
+  });
+}
+/* With AI: the model finds the items and copies the date words; resolveDate turns those words into the date. */
+function finishItem(x,now){
+  const when=String(x.when||'').trim().slice(0,80), r=resolveDate(when,now), ai=ISO_RE.test(x.due||'')?x.due:'';
+  let due='', flags=r.notes.slice();
+  if(r.status==='ok'){due=r.due;if(ai&&ai!==due) flags.push('The AI read this as '+fmtAbs(ai)+'. Check it.')}
+  else if(r.status==='none'&&ai){due=ai;flags.push('Couldn’t confirm this date from the text. Check it.')}
+  else if(r.status==='none'&&when) flags.push('Couldn’t read that as a date. Set it yourself.');
+  return {title:String(x.title||'').trim().slice(0,140),due,when,flag:flags.join(' '),submit:String(x.submit||'').trim().slice(0,120),link:cleanLink(x.link),
+    imp:[1,2,3].includes(+x.imp)?+x.imp:2,effort:['S','M','L'].includes(x.effort)?x.effort:'M',area:AREAS.includes(x.area)?x.area:'Personal'};
+}
 $('fArea').innerHTML=AREAS.map(a=>`<option>${a}</option>`).join('');
-function setTab(dump){$('tabDump').setAttribute('aria-selected',dump);$('tabOne').setAttribute('aria-selected',!dump);$('paneDump').hidden=!dump;$('paneOne').hidden=dump;if(!dump)$('fTitle').focus()}
-$('tabDump').onclick=()=>setTab(true);$('tabOne').onclick=()=>setTab(false);
-$('paneOne').onsubmit=e=>{e.preventDefault();const title=$('fTitle').value.trim();if(!title)return;
-  addTask({title,due:$('fDue').value,imp:$('fImp').value,effort:$('fEff').value,area:$('fArea').value});save();render();$('paneOne').reset();toast('Added. It’s safe here now.',[],2500)};
+function setTab(dump){$('tabDump').setAttribute('aria-selected',dump);$('tabOne').setAttribute('aria-selected',!dump);$('paneDump').hidden=!dump;$('paneOne').hidden=dump}
+$('tabDump').onclick=()=>{stopEdit();setTab(true)};
+$('tabOne').onclick=()=>{setTab(false);$('fTitle').focus()};
+$('dumpSample').onclick=()=>{$('dump').value=SAMPLE;$('dumpStatus').textContent='';$('dump').focus()};
 $('dumpGo').onclick=async()=>{
-  const txt=$('dump').value.trim(); if(!txt) {$('dumpStatus').textContent='Type a few things first.';return}
-  if(!sampleFn){ // no AI here: one line = one task
-    dumpItems=txt.split(/\n|;/).map(s=>s.trim()).filter(Boolean).map(t=>({title:t,due:'',imp:2,effort:'M',area:'Personal'}));
-    $('dumpStatus').textContent='Split by line. Add dates after, in One task.'; showPreview(); return;
-  }
-  const b=$('dumpGo'); b.disabled=true; $('dumpStatus').textContent='Sorting…';
+  const txt=$('dump').value.trim(); if(!txt){$('dumpStatus').textContent='Paste or type a notice first.';return}
   const now=new Date();
-  const prompt=`You turn a stressed student's messy brain dump into clean tasks.
+  const local=msg=>{dumpItems=extractLocal(txt,now);$('dumpStatus').textContent=msg;showPreview()};
+  if(!sampleFn){local('Read without AI. Check each field, then save.');return}
+  const b=$('dumpGo'); b.disabled=true; $('dumpStatus').textContent='Reading…';
+  const prompt=`You pull deadlines out of a notice or message that an Indian college student received (class WhatsApp groups, Classroom, email, Unstop). It may be English or Hinglish.
 Now: ${now.toLocaleDateString('en-GB',{weekday:'long'})} ${dayKey(now)} ${pad(now.getHours())}:${pad(now.getMinutes())} (local time).
-Reply with only a JSON array. Each item: {"title": short actionable title starting with a verb, max 70 chars, "due": "YYYY-MM-DDTHH:mm" local time or "" if no deadline was stated or implied (a day without a time means 23:59 that day; "tomorrow morning" means 10:00), "imp": 1|2|3 (3 = real consequences like grades, offers, internships, deadlines others depend on), "effort": "S"|"M"|"L" (S under 30 min, M about an hour, L 2+ hours), "area": one of ${JSON.stringify(AREAS)}}.
-Split combined items. Do not invent tasks that are not in the text. Example: [{"title":"Submit DBMS assignment","due":"2026-10-17T23:59","imp":3,"effort":"M","area":"Assignment"}]
+Reply with only a JSON array, one item per distinct deadline or task. Each item:
+{"title": short action starting with a verb, max 70 chars,
+ "when": the date and time words copied exactly from the text (e.g. "Friday 5 pm", "kal tak", "12/11 EOD"), or "" if none are given,
+ "due": your reading of that as "YYYY-MM-DDTHH:mm" local time, or "" if there is no date or it is vague,
+ "submit": what to submit and where, max 80 chars, or "",
+ "link": a URL copied exactly from the text, or "",
+ "imp": 1|2|3 (3 = can't be undone: internship or scholarship forms, offers, fees, registrations, exams; 2 = graded coursework; 1 = low stakes),
+ "effort": "S"|"M"|"L" (S under 30 min, M about an hour, L 2+ hours),
+ "area": one of ${JSON.stringify(AREAS)}}
+Do not invent deadlines, dates or links that are not in the text. Example: [{"title":"Submit ML lab record","when":"Friday 5 pm","due":"2026-11-13T17:00","submit":"Upload on Classroom","link":"","imp":2,"effort":"M","area":"Assignment"}]
 
-Brain dump:
+Notice:
 ${txt}`;
   try{
     const r=await sampleFn.json(prompt,{modelTier:'quick'});
     if(!Array.isArray(r)||!r.length) throw {code:'empty'};
-    dumpItems=r.filter(x=>x&&x.title).slice(0,25).map(x=>({...x,due:/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(x.due||'')?x.due:''}));
-    $('dumpStatus').textContent=`Found ${dumpItems.length}. Check them, then add.`; showPreview();
+    dumpItems=r.filter(x=>x&&x.title).slice(0,25).map(x=>finishItem(x,now));
+    if(!dumpItems.length) throw {code:'empty'};
+    $('dumpStatus').textContent=`Found ${dumpItems.length}. Check ${dumpItems.length===1?'it':'them'}, then save.`; showPreview();
   }catch(e){
-    $('dumpStatus').textContent=e&&e.code==='not_granted'?'AI sorting is off for this page. Splitting by line instead.':e&&e.code==='rate_limited'?'Too many requests just now. Try again in a minute.':'Couldn’t sort that. Try again, or add it as one task.';
-    if(e&&e.code==='not_granted'){sampleFn=null;$('dumpGo').click()}
+    if(e&&e.code==='not_granted') sampleFn=null;
+    local(e&&e.code==='not_granted'?'AI reading is off for this page. Read without it; check each field.':'The AI didn’t answer. Read without it; check each field.');
   }finally{b.disabled=false}
 };
+function dupHTML(x){
+  const d=findDup({title:x.title,due:x.due,link:cleanLink(x.link)}); if(!d) return '';
+  if(d.kind==='same') return `<div class="dup"><span>Already saved as “${esc(d.t.title)}”. Saving keeps one record and counts it as seen again.</span></div>`;
+  return `<div class="dup"><span>Looks like “${esc(d.t.title)}”, ${d.t.due?'saved as due '+esc(fmtAbs(d.t.due)):'saved without a date'}. Has the deadline moved?</span>
+  <select data-dupact aria-label="What to do with this deadline"><option value="update" ${x.dupAct!=='new'?'selected':''}>Yes, update the saved deadline</option><option value="new" ${x.dupAct==='new'?'selected':''}>No, save as a separate deadline</option></select></div>`;
+}
+function pvHTML(x,i){
+  const src=x.when||x.flag?`<p class="small src">${x.when?`Date read from “${esc(x.when)}”. `:''}${x.flag?`<span class="flag">${esc(x.flag)}</span>`:''}</p>`
+    :x.due?'':`<p class="small src"><span class="flag">No date found. Set one if there is a deadline.</span></p>`;
+  return `<div class="pv" data-pv="${i}">
+  <label class="pv-head"><input type="checkbox" data-pi="${i}" checked aria-label="Save this one"><input type="text" data-f="title" value="${esc(x.title)}" maxlength="140" aria-label="What is it?"></label>
+  <div class="grid2"><label class="field"><span>Due</span><input type="datetime-local" data-f="due" value="${esc(x.due)}"></label>
+  <label class="field"><span>If it slips…</span><select data-f="imp">${[1,2,3].map(v=>`<option value="${v}" ${x.imp===v?'selected':''}>${STAKES[v]}</option>`).join('')}</select></label></div>
+  ${src}
+  <div class="grid2"><label class="field"><span>What to submit, and where</span><input type="text" data-f="submit" value="${esc(x.submit)}" maxlength="120"></label>
+  <label class="field"><span>Link</span><input type="text" data-f="link" inputmode="url" value="${esc(x.link)}" maxlength="300"></label></div>
+  <div data-dupnote>${dupHTML(x)}</div></div>`;
+}
 function showPreview(){
   const el=$('dumpPreview');
-  el.innerHTML=`<div class="preview">${dumpItems.map((x,i)=>{const dl=dueLabel(x.due?(new Date(x.due)-Date.now())/36e5:null,x.due);
-   return `<label><input type="checkbox" data-pi="${i}" checked><span class="min"><b style="font-weight:600">${esc(x.title)}</b><br><span class="small muted">${dl.txt} · ${esc(x.area||'Personal')} · ${{1:'low stakes',2:'matters',3:'high stakes'}[x.imp]||'matters'}</span></span></label>`}).join('')}</div>
-   <div class="row-end" style="margin-top:10px"><button class="btn ghost" id="pvCancel" type="button">Discard</button><button class="btn primary" id="pvAdd" type="button">Add selected</button></div>`;
+  el.innerHTML=`<div class="preview">${dumpItems.map(pvHTML).join('')}</div>
+   <div class="row-end" style="margin-top:10px"><span class="small muted" style="margin-right:auto">Nothing is saved until you tap Save.</span><button class="btn ghost" id="pvCancel" type="button">Discard</button><button class="btn primary" id="pvAdd" type="button">Save</button></div>`;
+  el.querySelectorAll('.pv').forEach(card=>{
+    const x=dumpItems[+card.dataset.pv];
+    const on=e=>{
+      if('dupact' in e.target.dataset){x.dupAct=e.target.value;return}
+      const f=e.target.dataset.f; if(!f) return;
+      x[f]=f==='imp'?+e.target.value:e.target.value;
+      if(f==='title'||f==='due'||f==='link') card.querySelector('[data-dupnote]').innerHTML=dupHTML(x);
+    };
+    card.addEventListener('input',on); card.addEventListener('change',on);
+  });
   $('pvCancel').onclick=()=>{dumpItems=null;el.innerHTML='';$('dumpStatus').textContent=''};
-  $('pvAdd').onclick=()=>{const sel=[...el.querySelectorAll('[data-pi]')].filter(c=>c.checked).map(c=>dumpItems[+c.dataset.pi]);
-    sel.forEach(addTask);save();dumpItems=null;el.innerHTML='';$('dump').value='';$('dumpStatus').textContent='';render();
-    toast(`Added ${sel.length}. Your head can let go of ${sel.length===1?'it':'them'} now.`,[],3500)};
+  $('pvAdd').onclick=()=>{
+    const sel=[...el.querySelectorAll('[data-pi]')].filter(c=>c.checked).map(c=>dumpItems[+c.dataset.pi]).filter(x=>String(x.title).trim());
+    if(!sel.length){$('dumpStatus').textContent='Tick at least one to save.';return}
+    let nNew=0,nSame=0,nMoved=0;
+    sel.forEach(x=>{
+      x.title=String(x.title).trim(); x.link=cleanLink(x.link); if(!ISO_RE.test(x.due||'')) x.due='';
+      const d=findDup(x), fill=t=>{if(!t.submit&&x.submit)t.submit=String(x.submit).slice(0,120);if(!t.link&&x.link)t.link=x.link;t.seen=(t.seen||1)+1};
+      if(d&&d.kind==='same'){fill(d.t);nSame++}
+      else if(d&&x.dupAct!=='new'){moveDue(d.t,x.due,x.when);fill(d.t);nMoved++}
+      else{addTask(x);nNew++}
+    });
+    bump(sel.length); save(); dumpItems=null; el.innerHTML=''; $('dump').value=''; $('dumpStatus').textContent=''; render();
+    const bits=[]; if(nNew)bits.push(nNew+' saved'); if(nMoved)bits.push(nMoved+' moved to the new date'); if(nSame)bits.push(nSame+' already here, kept as one');
+    toast(cap1(bits.join(', '))+'.',[],4000);
+  };
 }
+
+/* ---------- capture: quick add and edit ---------- */
+function startEdit(t){
+  if(!t) return; editing=t.id; setTab(false);
+  $('fTitle').value=t.title; $('fDue').value=t.due||''; $('fArea').value=AREAS.includes(t.area)?t.area:'Personal'; $('fImp').value=t.imp; $('fEff').value=t.effort; $('fSubmit').value=t.submit||''; $('fLink').value=t.link||'';
+  $('oneGo').textContent='Save changes'; $('oneCancel').hidden=false;
+  $('capture').scrollIntoView({block:'start'}); $('fTitle').focus();
+}
+function stopEdit(){editing=null;$('paneOne').reset();$('oneGo').textContent='Add deadline';$('oneCancel').hidden=true}
+$('oneCancel').onclick=stopEdit;
+$('paneOne').onsubmit=e=>{
+  e.preventDefault(); const title=$('fTitle').value.trim(); if(!title) return;
+  const o={title,due:$('fDue').value,imp:+$('fImp').value,effort:$('fEff').value,area:$('fArea').value,submit:$('fSubmit').value.trim(),link:cleanLink($('fLink').value)};
+  const t=editing&&byId(editing);
+  if(t){
+    const due=ISO_RE.test(o.due)?o.due:'', movedDate=due!==t.due&&!!t.due&&!!due, rearm=due!==t.due||o.imp!==t.imp;
+    if(movedDate) t.history.push({due:t.due,at:Date.now()});
+    Object.assign(t,{title:title.slice(0,140),due,imp:o.imp,effort:o.effort,area:o.area,submit:o.submit.slice(0,120),link:o.link});
+    if(rearm) armReminders(t);
+    save(); stopEdit(); render(); toast(movedDate?'Updated. The old date is kept in its history.':'Updated.',[],3000);
+  }else{
+    addTask(o); bump(1); save(); stopEdit(); render(); toast('Saved. It’s on the radar now.',[],2500);
+  }
+};
 async function shrink(t,b){
   if(!t||!sampleFn)return; b.disabled=true; b.textContent='Breaking it down…';
   try{
-    const r=await sampleFn.json(`Break this task into 3 to 5 tiny, concrete first steps a tired student could start in under 10 minutes each. Task: "${t.title}" (area: ${t.area}). Reply with only a JSON array of short strings, each under 60 characters, starting with a verb. Example: ["Open the assignment PDF","Write 3 bullet points for Q1"]`,{modelTier:'quick'});
+    const r=await sampleFn.json(`Break this task into 3 to 5 tiny, concrete first steps a busy student could start in under 10 minutes each. Task: "${t.title}" (kind: ${t.area}${t.submit?'; to submit: '+t.submit:''}). Reply with only a JSON array of short strings, each under 60 characters, starting with a verb. Example: ["Open the assignment PDF","Write 3 bullet points for Q1"]`,{modelTier:'quick'});
     if(!Array.isArray(r)||!r.length) throw 0;
     t.steps=r.slice(0,5).map(s=>({text:String(s).slice(0,80),done:false})); save(); render();
   }catch(e){b.disabled=false;b.textContent='Couldn’t break it down. Try again'}
 }
 
-/* ---------- toast & nudges ---------- */
+/* ---------- toast, reminders tick, optional nudges ---------- */
 let toastTimer=null;
 function toast(msg,btns=[],ms=0){
   $('toastMsg').textContent=msg; const bw=$('toastBtns'); bw.innerHTML='';
@@ -507,56 +747,67 @@ function toast(msg,btns=[],ms=0){
 }
 function hideToast(){$('toast').hidden=true}
 const NUDGES={
-  water:{every:60,msgs:['Sip of water? Your brain is about 75% of it.','Water break. Future you, mid-deadline, says thanks.','Quick glass of water, then back to it.']},
-  move:{every:55,msgs:['You’ve been still a while. Stand up and roll your shoulders for a minute?','Two-minute walk? Even to the kitchen and back counts.','Stretch break. Reach up, then touch your toes, slowly.']},
-  eyes:{every:25,msgs:['Look at something 20 feet away for 20 seconds. Your eyes will thank you.','Screen break for your eyes. Look out a window for a moment.']},
+  water:{every:60,msgs:['Sip of water?','Water break, then back to it.']},
+  move:{every:55,msgs:['You’ve been still a while. Stand up and roll your shoulders for a minute?','Two-minute walk? Even to the kitchen and back counts.']},
+  eyes:{every:25,msgs:['Look at something 20 feet away for 20 seconds.','Screen break for your eyes. Look out a window for a moment.']},
 };
-const lastN={water:Date.now(),move:Date.now(),eyes:Date.now()}; let lastAny=Date.now(), sleepShown='';
+const lastN={water:Date.now(),move:Date.now(),eyes:Date.now()}; let lastAny=Date.now();
 function nudgeTick(){
-  if(!S.prefs.nudges||!$('toast').hidden||!$('calm').hidden||document.hidden) return;
-  const now=Date.now(), hr=new Date().getHours();
-  if((hr>=23||hr<4)&&sleepShown!==dayKey()){sleepShown=dayKey();
-    toast('It’s late. Whatever’s left will still be here tomorrow, and you’ll be sharper for it.',[['Good night',hideToast,true]]);return}
+  if(!S.prefs.nudges||!$('toast').hidden||!$('focus').hidden||document.hidden) return;
+  const now=Date.now();
   if(now-lastAny<20*6e4) return;
   for(const k of ['eyes','move','water']){const n=NUDGES[k];
     if(now-lastN[k]>=n.every*6e4){lastN[k]=now;lastAny=now;
-      toast(n.msgs[Math.floor(Math.random()*n.msgs.length)],[['Did it',()=>{const d=dayKey();S.breaks[d]=(S.breaks[d]||0)+1;save();renderWeek();toast('Good. That counts.',[],2000)},true],['Later',()=>{lastN[k]=Date.now()-(n.every-10)*6e4;hideToast()}]]);
+      toast(n.msgs[Math.floor(Math.random()*n.msgs.length)],[['Did it',()=>{const d=dayKey();S.breaks[d]=(S.breaks[d]||0)+1;save();hideToast()},true],['Later',()=>{lastN[k]=Date.now()-(n.every-10)*6e4;hideToast()}]]);
       return}}
 }
-setInterval(nudgeTick,30000);
+setInterval(()=>{if(!remindTick()) nudgeTick()},30000);
+setTimeout(remindTick,1500);
 $('nOn').onchange=e=>{S.prefs.nudges=e.target.checked;save()};
 
-/* ---------- calm mode ---------- */
-let breathTimer=null;
-function openCalm(){
+/* ---------- delete my data ---------- */
+$('wipe').onclick=async e=>{
+  const b=e.currentTarget;
+  if(!b.dataset.armed){b.dataset.armed='1';b.textContent='Tap again to delete';setTimeout(()=>{delete b.dataset.armed;b.textContent='Delete everything'},4000);return}
+  delete b.dataset.armed; b.textContent='Delete everything';
+  clearTimeout(saveTimer); S=fresh(); dumpItems=null; $('dumpPreview').innerHTML=''; $('dump').value=''; stopEdit();
+  try{localStorage.removeItem(LS)}catch(err){}
+  let ok=true;
+  if(docRef){try{await saving;await docRef.delete()}catch(err){ok=false}}
+  render();
+  toast(ok?'Deleted. Nothing of yours is stored here now.':'Deleted on this device. Couldn’t reach your account, so try again when you’re online.',[],5000);
+};
+
+/* ---------- just the next step ---------- */
+function openFocus(msg){
   hideToast();
   const p=planDay(), top=p.picks[0];
   let step='';
   if(top){const t=top.t, next=(t.steps||[]).find(s=>!s.done);
-    step=`<div class="label" style="margin-bottom:6px">Your one next step</div><p style="margin:0 0 12px;font-weight:600;font-size:17px">${esc(next?next.text:(t.effort==='L'?'Spend 10 minutes on: ':'')+t.title)}</p>
-    <div class="row-end" style="justify-content:center">${next?`<button class="btn primary" id="calmStepDone" type="button">Done with this step</button>`:`<button class="btn primary" id="calmTaskDone" type="button">I did it</button>`}</div>`;
-  } else step=`<p style="margin:0">There's nothing you have to do right now. Just breathe.</p>`;
-  $('calmStep').innerHTML=step;
+    step=`<div class="label" style="margin-bottom:6px">Your one next step</div><p style="margin:0 0 12px;font-weight:600;font-size:17px;overflow-wrap:anywhere">${esc(next?next.text:(t.effort==='L'?'Spend 10 minutes on: ':'')+t.title)}</p>
+    <div class="row-end" style="justify-content:center">${next?`<button class="btn primary" id="focusStepDone" type="button">Done with this step</button>`:`<button class="btn primary" id="focusTaskDone" type="button">I did it</button>`}</div>`;
+  } else step=`<p style="margin:0">Nothing you have to do right now.</p>`;
+  $('focusStep').innerHTML=step;
+  $('focusMsg').textContent=msg||'Just this one step. Everything else is held.';
   const soon=openTasks().filter(t=>{const h=hoursUntil(t);return h!=null&&h<=72}).length;
-  $('calmRadar').textContent=soon?`${soon} deadline${soon>1?'s are':' is'} held safely on the radar. You don’t need to think about ${soon>1?'them':'it'} right now.`:'';
+  $('focusRadar').textContent=soon?`${soon} deadline${soon>1?'s are':' is'} on the radar. You’ll be reminded in time.`:'';
   if(top){
-    const sd=$('calmStepDone'), td=$('calmTaskDone');
-    if(sd) sd.onclick=()=>{const nx=top.t.steps.find(s=>!s.done);nx.done=true;if(top.t.steps.every(s=>s.done)){top.t.done=true;top.t.doneAt=Date.now()}save();render();openCalm();$('calmMsg').textContent='That’s one. You’re doing better than you think.'};
-    if(td) td.onclick=()=>{top.t.done=true;top.t.doneAt=Date.now();save();render();openCalm();$('calmMsg').textContent='Done. Take a breath before anything else.'};
+    const sd=$('focusStepDone'), td=$('focusTaskDone');
+    if(sd) sd.onclick=()=>{const nx=top.t.steps.find(s=>!s.done);nx.done=true;if(top.t.steps.every(s=>s.done)){top.t.done=true;top.t.doneAt=Date.now()}save();render();openFocus('That’s one. Here’s the next.')};
+    if(td) td.onclick=()=>{top.t.done=true;top.t.doneAt=Date.now();save();render();openFocus('Done. Here’s the next one, when you’re ready.')};
   }
-  $('calm').hidden=false; $('calmClose').focus();
-  const phases=[['Breathe in',4],['Hold',4],['Breathe out',6]]; let i=0;
-  const run=()=>{$('breathHint').textContent=phases[i][0];breathTimer=setTimeout(()=>{i=(i+1)%3;run()},phases[i][1]*1000)};
-  clearTimeout(breathTimer); run();
+  $('focus').hidden=false; $('focusClose').focus();
 }
-$('calmOpen').onclick=()=>{$('calmMsg').textContent='Nothing else needs you right now. Just this one small step.';openCalm()};
-$('calmClose').onclick=()=>{$('calm').hidden=true;clearTimeout(breathTimer)};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('calm').hidden)$('calmClose').click()});
+$('focusOpen').onclick=()=>openFocus();
+$('focusClose').onclick=()=>{$('focus').hidden=true;$('focusOpen').focus()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('focus').hidden)$('focusClose').click()});
 
 /* ---------- boot ---------- */
-const local=lsGet(); if(local&&typeof local==='object') S=Object.assign(S,local);
+const local=lsGet(); if(local&&typeof local==='object') S=Object.assign(fresh(),{v:1},local);
+migrate();
 render();
-setInterval(()=>{if($('calm').hidden&&!document.querySelector('textarea:focus,input:focus,select:focus')){renderPlan();renderRadar()}},5*6e4);
+setInterval(()=>{if($('focus').hidden&&!document.querySelector('textarea:focus,input:focus,select:focus')){renderDue();renderPlan();renderRadar()}},5*6e4);
+window.__tula={resolveDate,findDup,reminderTimes,extractLocal};   // for checking the date and duplicate logic from the console
 (async()=>{
   const use=window.claude&&window.claude.use;
   if(!use) return;
@@ -566,8 +817,8 @@ setInterval(()=>{if($('calm').hidden&&!document.querySelector('textarea:focus,in
     if(db&&user){const id=await user.id(); if(id){
       docRef=db.collection('data/users/'+id).doc('state');
       const snap=await docRef.get();
-      if(snap.exists){const d=snap.data(); try{const cloud=JSON.parse(d.state); if(cloud&&(cloud.updatedAt||0)>=(S.updatedAt||0)){S=Object.assign({tasks:[],checkins:{},prefs:{nudges:true},breaks:{}},cloud);lsSet()} else save()}catch(e){}}
-      else if(S.tasks.length||Object.keys(S.checkins).length) save();
+      if(snap.exists){const d=snap.data(); try{const cloud=JSON.parse(d.state); if(cloud&&(cloud.updatedAt||0)>=(S.updatedAt||0)){S=Object.assign(fresh(),{v:1},cloud);migrate();lsSet()} else save()}catch(e){}}
+      else if(S.tasks.length) save();
       status('Saved to your account');
     }}
     render();

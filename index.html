@@ -1,17 +1,17 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <title>Tula</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Tula is a personal AI that plans your day around how you feel, keeps every deadline in sight, and knows when to tell you to rest.">
+<meta name="description" content="Tula keeps every deadline from your college groups in one place, follows extensions and repeats, and reminds you in time for what's at stake.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
 <style>
-/* Layout: one wide hero with a live-looking app card beside the promise, then calm stacked bands. Same pastel token set as the app. */
+/* Layout: one wide hero with a live-looking "what's due" card beside the promise, then calm stacked bands. Same pastel token set as the app. */
 :root{
   --bg:#F6F3FA; --surface:#FFFFFF; --sunk:#EEE9F5; --line:#E3DCEE;
   --fg:#2A2535; --muted:#6F6880;
   --accent:#C9BBF0; --accent-ink:#2A2535; --accent-text:#7462B5; --accent-soft:#EDE7FB;
   --peach:#FFE3D3; --peach-ink:#9A5A33; --mint:#D6F1E3; --mint-ink:#2F7350;
-  --sky:#DCEBFB; --sky-ink:#3B6996; --rose:#FBDDE3; --rose-ink:#A6435A;
+  --sky:#DCEBFB; --sky-ink:#3B6996; --rose:#FBDDE3; --rose-ink:#A6435A; --butter:#FBEFC8; --butter-ink:#8A6A12;
   --shadow:rgba(80,60,120,.12);
   --display:"Quicksand",ui-rounded,ui-sans-serif,system-ui,sans-serif;
   --body:"Nunito Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -21,13 +21,13 @@
   --fg:#EFEBF7; --muted:#A9A2BA;
   --accent:#B9A8EC; --accent-ink:#1B1923; --accent-text:#C9BBF5; --accent-soft:#363052;
   --peach:#4A3329; --peach-ink:#FFC9AC; --mint:#243F33; --mint-ink:#9EDDBC;
-  --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --shadow:rgba(0,0,0,.4); color-scheme:dark}}
+  --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --butter:#433B22; --butter-ink:#EBD38A; --shadow:rgba(0,0,0,.4); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1B1923; --surface:#24212E; --sunk:#2D2939; --line:#3A3549;
   --fg:#EFEBF7; --muted:#A9A2BA;
   --accent:#B9A8EC; --accent-ink:#1B1923; --accent-text:#C9BBF5; --accent-soft:#363052;
   --peach:#4A3329; --peach-ink:#FFC9AC; --mint:#243F33; --mint-ink:#9EDDBC;
-  --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --shadow:rgba(0,0,0,.4); color-scheme:dark}
+  --sky:#243548; --sky-ink:#A9CDF2; --rose:#472A33; --rose-ink:#F3A8B8; --butter:#433B22; --butter-ink:#EBD38A; --shadow:rgba(0,0,0,.4); color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
 a{color:inherit}
@@ -50,7 +50,7 @@ nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;p
 .hero .in{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;padding-block:40px 72px}
 @media (max-width:880px){.hero .in{grid-template-columns:1fr;gap:40px}}
 .eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text);background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:20px}
-.hero h1{font-size:clamp(38px,6vw,64px);font-weight:700}
+.hero h1{font-size:clamp(36px,5.4vw,58px);font-weight:700}
 .hero h1 em{font-style:normal;color:var(--accent-text)}
 .lead{font-size:clamp(17px,2vw,20px);color:var(--muted);margin-top:20px;max-width:34em}
 .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
@@ -60,22 +60,22 @@ nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;p
 .phone .tag{position:absolute;top:-12px;right:18px;font-size:12px;font-weight:700;background:var(--peach);color:var(--peach-ink);padding:4px 10px;border-radius:999px}
 .ph-top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
 .ph-voice{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.3}
-.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .pill{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--sunk);color:var(--muted)}
-.p-lav{background:var(--accent-soft);color:var(--accent-text)}.p-sky{background:var(--sky);color:var(--sky-ink)}.p-peach{background:var(--peach);color:var(--peach-ink)}.p-mint{background:var(--mint);color:var(--mint-ink)}.p-rose{background:var(--rose);color:var(--rose-ink)}
+.p-lav{background:var(--accent-soft);color:var(--accent-text)}.p-sky{background:var(--sky);color:var(--sky-ink)}.p-peach{background:var(--peach);color:var(--peach-ink)}.p-mint{background:var(--mint);color:var(--mint-ink)}.p-rose{background:var(--rose);color:var(--rose-ink)}.p-butter{background:var(--butter);color:var(--butter-ink)}
 .pick{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:13px;border-radius:16px;border:1px solid var(--line)}
 .pick.first{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 .pick b{font-family:var(--display);font-size:24px;color:var(--accent-text);line-height:1}
 .pick h3{font-size:15.5px;font-family:var(--body);font-weight:700;letter-spacing:0}
 .pick p{font-size:13px;color:var(--muted)}
-.radar{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:10px 12px;border-radius:14px;background:var(--rose);color:var(--rose-ink);font-weight:600}
+.radar{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:10px 12px;border-radius:14px;background:var(--sunk);color:var(--muted);font-weight:600}
 /* bands */
 section{padding-block:72px}
 .band{background:var(--surface);border-block:1px solid var(--line)}
 .sec-title{font-size:clamp(28px,4vw,42px);font-weight:700;max-width:20ch}
 .sec-lead{color:var(--muted);margin-top:14px;max-width:38em}
 /* problem */
-.slips{display:flex;flex-direction:column;gap:12px;margin-top:32px;max-width:640px}
+.slips{display:flex;flex-direction:column;gap:12px;margin-top:32px;max-width:680px}
 .slip{display:flex;gap:14px;align-items:baseline;font-size:clamp(19px,2.4vw,24px);font-family:var(--display);font-weight:600;color:var(--muted)}
 .slip s{text-decoration-color:var(--rose-ink);text-decoration-thickness:2px}
 .turn{font-family:var(--display);font-weight:700;font-size:clamp(26px,3.6vw,38px);margin-top:28px}
@@ -96,6 +96,7 @@ section{padding-block:72px}
 .feat h3{font-size:19px}
 .feat p{font-size:15px;opacity:.85}
 .feat .soon{align-self:flex-start;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--surface);color:var(--muted)}
+.feat.wide{grid-column:1/-1}
 /* principles */
 .princ{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 48px;margin-top:40px}
 @media (max-width:700px){.princ{grid-template-columns:1fr}}
@@ -118,69 +119,66 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;pa
 
 <header class="hero" id="top"><div class="in">
   <div>
-    <span class="eyebrow">Your all-rounder personal AI</span>
-    <h1>Stay on top of life <em>without losing yourself.</em></h1>
-    <p class="lead">Tula plans your day around how you actually feel, keeps every deadline in sight, and knows when to tell you to rest. Built for students and builders juggling too much.</p>
+    <span class="eyebrow">For college students in India</span>
+    <h1>Every deadline from your college groups, <em>sorted by what's at stake.</em></h1>
+    <p class="lead">Assignments, internship forms, hackathon registrations, fee dates. They land in a dozen chats, get extended in one and repeated in another. Tula keeps one record of each, reminds you in time for what a miss would cost, and shows you what's due today.</p>
     <div class="ctas"><a class="btn primary" href="app/">Try the early version</a><a class="btn" href="#how">See how it works</a></div>
-    <p class="fine">Free while in early access. Android app in progress.</p>
+    <p class="fine">Free while in early access. Android app in progress. For college students 18+.</p>
   </div>
-  <div class="phone" aria-label="Example of Tula's today screen">
+  <div class="phone" aria-label="Example of Tula's what's due screen">
     <span class="tag">Example day</span>
-    <div class="ph-top"><span>Good morning · Thursday</span><span>3 picks · 2 hr</span></div>
-    <p class="ph-voice">Low battery day. Let's take a lighter path.</p>
-    <div class="pills"><span class="pill">Energy: Tired</span><span class="pill">Stress: Heavy</span></div>
-    <div class="pick first"><b>01</b><div><h3>Submit DBMS assignment</h3><p>Due tonight, so it goes first. Everything else can wait.</p></div></div>
-    <div class="pick"><b>02</b><div><h3>Reply to internship HR</h3><p>Small and doable, even on a low day.</p></div></div>
-    <div class="pick"><b>03</b><div><h3>Meetup poster, first 25 min</h3><p>Big one, so today you only start it. That counts.</p></div></div>
-    <div class="radar">2 more deadlines held on the radar this week</div>
+    <div class="ph-top"><span>Thursday morning</span><span>3 picks today</span></div>
+    <p class="ph-voice">3 due in the next 72 hours. 1 moved.</p>
+    <div class="pick first"><b>01</b><div><h3>Submit DBMS assignment</h3><p>Due within a day, so it goes first.</p><div class="pills"><span class="pill p-rose">Today 11:59 pm</span><span class="pill p-peach">High stakes</span></div></div></div>
+    <div class="pick"><b>02</b><div><h3>Reply to internship HR about the offer</h3><p>A miss here can't be undone.</p><div class="pills"><span class="pill p-peach">Tomorrow 12:00 pm</span><span class="pill">Seen 2 times</span></div></div></div>
+    <div class="pick"><b>03</b><div><h3>Submit ML lab record</h3><p>Upload on Classroom.</p><div class="pills"><span class="pill">Mon 5:00 pm</span><span class="pill p-butter">Moved from Fri</span></div></div></div>
+    <div class="radar">2 more this week, held on the radar</div>
   </div>
 </div></header>
 
 <section class="band" aria-labelledby="probH"><div class="in">
-  <h2 class="sec-title" id="probH">It's never one big failure. It's small things slipping.</h2>
+  <h2 class="sec-title" id="probH">Deadlines don't arrive in one place.</h2>
   <div class="slips">
-    <div class="slip"><s>The assignment you swore you'd submit</s></div>
-    <div class="slip"><s>The internship form due "next week"</s></div>
-    <div class="slip"><s>The offer email you meant to answer</s></div>
-    <div class="slip"><s>Water, sleep, a walk, a break</s></div>
+    <div class="slip"><s>The lab record notice, buried under 200 messages</s></div>
+    <div class="slip"><s>The internship form that closed last night</s></div>
+    <div class="slip"><s>The extension announced in the other group</s></div>
+    <div class="slip"><s>The fee date on a PDF nobody opened</s></div>
   </div>
-  <p class="turn">You're not lazy. <span>You're overloaded.</span></p>
-  <p class="sec-lead">Most apps add another list, another streak, another reason to feel behind. Tula does the opposite. It holds the details so your head doesn't have to, and it plans for the person you are today.</p>
+  <p class="turn">You didn't forget. <span>It was never in one place.</span></p>
+  <p class="sec-lead">Calendars and to-do apps wait for you to type things in. College doesn't work like that. Notices arrive mid-semester, change twice, and show up in three groups. Tula is built for that mess.</p>
 </div></section>
 
 <section id="how" aria-labelledby="howH"><div class="in">
-  <h2 class="sec-title" id="howH">A calmer day in four steps</h2>
+  <h2 class="sec-title" id="howH">From a forwarded notice to done</h2>
   <ol class="steps">
-    <li><h3>Dump it all</h3><p>Type everything messy in one go. Tula turns it into tasks with dates, stakes and size. You confirm before anything is saved.</p></li>
-    <li><h3>Check in</h3><p>Mood, energy, stress. Ten seconds. Tula reads how much you have in the tank today.</p></li>
-    <li><h3>Get 2 or 3 picks</h3><p>Not 40 tasks. Just what fits your energy and what can't wait, each with a reason why.</p></li>
-    <li><h3>Let it hold the rest</h3><p>Every deadline in the next 72 hours stays on the radar. Nothing quietly disappears.</p></li>
+    <li><h3>Send the notice</h3><p>Paste a message from your class group, or type it your way. Tula pulls out the date, what to submit and the link. You check it before it saves.</p></li>
+    <li><h3>One record per deadline</h3><p>Extended to Monday? Same notice in another group? Tula updates the one record and shows you what changed.</p></li>
+    <li><h3>Reminders by stakes</h3><p>Three days, one day and the morning of for forms and offers. A day and three hours before for everything else.</p></li>
+    <li><h3>See what's due</h3><p>Each day, the 2 or 3 things to act on, plus everything due in the next 72 hours.</p></li>
   </ol>
 </div></section>
 
 <section class="band" id="features" aria-labelledby="featH"><div class="in">
-  <h2 class="sec-title" id="featH">Everything life throws at you, in one place</h2>
-  <p class="sec-lead">Work, wellbeing and the little things finally share context, so the help you get fits the day you're having.</p>
+  <h2 class="sec-title" id="featH">Built for what happens after you save it</h2>
+  <p class="sec-lead">Saving a deadline is the easy part. Tula does the part that comes after.</p>
   <div class="feats">
-    <div class="feat p-lav"><h3>Energy-aware planning</h3><p>Low day? Big tasks shrink to a first 25 minutes. Good day? Room for deep work.</p></div>
-    <div class="feat p-rose"><h3>Deadline radar</h3><p>Anything due soon stays visible, even what you snoozed. The fix for missed submissions.</p></div>
-    <div class="feat p-sky"><h3>Brain dump to tasks</h3><p>"DBMS due Friday, reply to HR, call home." Tula sorts it into a plan in seconds.</p></div>
-    <div class="feat p-mint"><h3>Calm mode</h3><p>When it's too much: one breath, one next step, nothing else on screen.</p></div>
-    <div class="feat p-peach"><h3>Gentle nudges</h3><p>Water, movement, eye breaks and a late-night "go sleep", written like a friend would.</p></div>
-    <div class="feat p-lav"><h3>Weekly reflection</h3><p>Patterns, not grades. One small adjustment for next week.</p></div>
-    <div class="feat p-sky"><span class="soon">Coming next</span><h3>Memory and notes</h3><p>"What was that idea I had last week?" Saved, searchable, and yours to delete.</p></div>
-    <div class="feat p-mint"><span class="soon">Coming next</span><h3>Ask Tula</h3><p>"Prepare me for tomorrow." Answers that know your tasks, notes and week.</p></div>
-    <div class="feat p-peach"><span class="soon">Coming next</span><h3>Android app</h3><p>Real notifications that reach you even when the app is closed.</p></div>
+    <div class="feat p-butter"><h3>Follows extensions</h3><p>When a date moves, Tula keeps the history, so you always know which date is the real one.</p></div>
+    <div class="feat p-sky"><h3>Catches repeats</h3><p>The same notice from three groups stays one deadline, not three.</p></div>
+    <div class="feat p-peach"><h3>Reminders by stakes</h3><p>An internship form gets more warning than a class quiz, because missing it costs more.</p></div>
+    <div class="feat p-rose"><h3>What's due, every day</h3><p>2 or 3 picks and a 72-hour radar. Snoozing something never takes it off the radar.</p></div>
+    <div class="feat p-mint"><h3>Beyond coursework</h3><p>Internships, hackathons, scholarships and fees sit beside your assignments.</p></div>
+    <div class="feat p-lav"><h3>Never guesses a date</h3><p>Tula shows the words the date came from. If a notice says "soon", it asks you instead of guessing.</p></div>
+    <div class="feat wide p-sky"><span class="soon">Coming next</span><h3>Android app</h3><p>Share a message, screenshot or PDF from any app straight to Tula, with reminders that reach you when the app is closed. In this early web version you paste the text, and reminders show while the page is open.</p></div>
   </div>
 </div></section>
 
 <section id="principles" aria-labelledby="prH"><div class="in">
   <h2 class="sec-title" id="prH">What Tula will never do</h2>
   <div class="princ">
-    <div><h3>No streaks, no guilt</h3><p>Missing a day doesn't reset anything. Rest is part of the plan, not a failure of it.</p></div>
-    <div><h3>No silent changes</h3><p>Tula suggests. You decide. It never adds, moves or deletes your commitments without asking.</p></div>
-    <div><h3>No pretending</h3><p>It tells you what it knows, what it's guessing, and what it can't do yet. No fake data, no fake actions.</p></div>
-    <div><h3>No notification spam</h3><p>Few nudges, quiet hours, and every reminder easy to pause.</p></div>
+    <div><h3>Never read your chats</h3><p>Tula sees only what you send it. No scanning groups, no reading notifications.</p></div>
+    <div><h3>Never change things silently</h3><p>It suggests, you confirm. It never adds, moves or deletes a deadline without your tap.</p></div>
+    <div><h3>Never pretend</h3><p>It tells you what it read, what it's unsure of, and what it can't do yet. No fake actions.</p></div>
+    <div><h3>Never keep what you want gone</h3><p>Delete everything in one tap, any time.</p></div>
   </div>
 </div></section>
 
@@ -191,10 +189,10 @@ footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;pa
 </div></section>
 
 <section aria-labelledby="ctaH"><div class="in final">
-  <h2 class="sec-title" id="ctaH">Life gets heavy. Come back here when it does.</h2>
+  <h2 class="sec-title" id="ctaH">The next deadline is already in one of your groups.</h2>
   <a class="btn primary" href="app/">Try the early version</a>
 </div></section>
 
-<footer><div class="in"><span>Tula · early access</span><span>Built in the open</span></div></footer>
+<footer><div class="in"><span>Tula · early access</span><span><a href="privacy.html">Privacy</a> · <a href="delete-account.html">Delete your account</a></span></div></footer>
 
 </body></html>

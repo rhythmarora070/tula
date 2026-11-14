@@ -6,3 +6,7 @@ node_modules/
 dist/
 build/
 *.log
+!.env.example
+
+# filled-in discovery sheets: real student data, never committed
+docs/discovery/data/

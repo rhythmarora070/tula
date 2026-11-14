@@ -1,0 +1,109 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Join the Tula pilot</title>
+<meta name="description" content="Install Tula on your Android phone and set it up so reminders always reach you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700&display=swap">
+<style>
+:root{--bg:#F6F3FA;--surface:#FFFFFF;--sunk:#EEE9F5;--line:#E3DCEE;--fg:#2A2535;--muted:#6F6880;--accent:#C9BBF0;--accent-ink:#2A2535;--accent-text:#7462B5;--accent-soft:#EDE7FB;--butter:#FBEFC8;--butter-ink:#8A6A12;
+  --display:"Quicksand",ui-rounded,ui-sans-serif,system-ui,sans-serif;--body:"Nunito Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#1B1923;--surface:#24212E;--sunk:#2D2939;--line:#3A3549;--fg:#EFEBF7;--muted:#A9A2BA;--accent:#B9A8EC;--accent-ink:#1B1923;--accent-text:#C9BBF5;--accent-soft:#363052;--butter:#433B22;--butter-ink:#EBD38A;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
+main{max-width:680px;margin:0 auto;padding:32px max(20px,env(safe-area-inset-right,0px)) 80px max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,6vw,40px)}
+h2{font-size:22px}
+p{margin:0}
+a{color:var(--accent-text);font-weight:700}
+.muted{color:var(--muted)}
+.lead{font-size:18px;color:var(--muted);margin-top:8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.btn{display:inline-block;align-self:flex-start;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;padding:13px 22px;border-radius:999px}
+ol,ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--sunk);color:var(--muted);border-radius:999px;padding:4px 12px;font-size:14px;font-weight:700}
+details{border-top:1px solid var(--line);padding:12px 0}
+details:first-of-type{border-top:0;padding-top:0}
+summary{cursor:pointer;font-weight:700}
+details p,details ol{margin-top:8px}
+.path{font-weight:700}
+.todo{background:var(--butter);color:var(--butter-ink);border-radius:4px;padding:0 4px;font-weight:700}
+footer{font-size:14px;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap}
+</style></head><body><main>
+
+<header>
+  <p><a href="./">← Tula</a></p>
+  <h1 style="margin-top:14px">Join the Tula pilot</h1>
+  <p class="lead">Four weeks. Send Tula the deadlines from your college groups, get reminded in time, and tell us honestly what's broken.</p>
+  <div class="chips" style="margin-top:14px"><span class="chip">Android only</span><span class="chip">18 and over</span><span class="chip">Free</span><span class="chip">About 2 minutes a week of feedback</span></div>
+</header>
+
+<section class="card" id="install">
+  <h2>1. Install Tula</h2>
+  <ol>
+    <li>Open this page on your Android phone and tap the button.</li>
+    <li>On the page that opens, tap <b>Install</b> and download the app.</li>
+    <li>Open the downloaded file. If Android asks, allow your browser to <b>install unknown apps</b>, then tap <b>Install</b>.</li>
+  </ol>
+  <a class="btn" href="#install" data-build-link>Install Tula</a>
+  <p class="muted"><span class="todo">[Paste the latest preview build link into the button before sharing this page]</span></p>
+  <p class="muted">Tula isn't on the Play Store yet, which is why Android asks. The app comes from the Tula team's Expo account.</p>
+</section>
+
+<section class="card" id="setup">
+  <h2>2. Set it up (3 minutes)</h2>
+  <ol>
+    <li><b>Sign in</b> on the You tab with your email. You'll get a 6-digit code; type it in. This backs up your deadlines and lets Tula read screenshots and PDFs.</li>
+    <li><b>Save your first deadline:</b> long-press a notice in a WhatsApp group, tap <b>Share</b>, then <b>Tula</b>. Check the card and tap Save.</li>
+    <li><b>Allow notifications</b> when Tula asks. Reminders are the whole point.</li>
+    <li><b>Let Tula run in the background</b> (next section). Without this, many phones hold reminders back to save battery.</li>
+  </ol>
+</section>
+
+<section class="card" id="battery">
+  <h2>3. Make sure reminders reach you</h2>
+  <p class="muted">Find your phone brand. Menu names change a little between versions; if yours looks different, search Settings for "battery" and look for Tula. More detail for every brand: <a href="https://dontkillmyapp.com" target="_blank" rel="noopener">dontkillmyapp.com</a>.</p>
+  <details><summary>Samsung</summary>
+    <p class="path">Settings → Apps → Tula → Battery → Unrestricted</p></details>
+  <details><summary>Xiaomi, Redmi, POCO</summary>
+    <p class="path">Settings → Apps → Manage apps → Tula → Battery saver → No restrictions</p>
+    <p>On the same screen, also turn on <b>Autostart</b>.</p></details>
+  <details><summary>Realme, OPPO</summary>
+    <p class="path">Settings → Apps → App management → Tula → Battery usage → turn on Allow background activity and Allow auto launch</p></details>
+  <details><summary>Vivo, iQOO</summary>
+    <p class="path">Settings → Battery → Background power consumption management → Tula → Allow</p></details>
+  <details><summary>OnePlus</summary>
+    <p class="path">Settings → Apps → Tula → Battery usage → Allow background activity</p></details>
+  <details><summary>Motorola, Google Pixel, Nothing, others</summary>
+    <p class="path">Settings → Apps → Tula → App battery usage → Unrestricted</p></details>
+  <p><b>Check it works:</b> save a deadline marked "Matters" that's due 3 hours and 2 minutes from now, then close Tula. A reminder should arrive in about 2 minutes.</p>
+</section>
+
+<section class="card" id="use">
+  <h2>4. During the pilot</h2>
+  <ul>
+    <li>Send Tula every deadline you get: assignments, internship forms, hackathons, fees, society work. Text, screenshots and PDFs all work.</li>
+    <li>If Tula reads a date wrong, fix it on the card before saving. That tells us what to improve.</li>
+    <li>Every Friday we'll send a 2-minute form. It's the most useful thing you can do for us.</li>
+    <li>When we fix something, close and reopen Tula to get it; there's usually no need to reinstall.</li>
+  </ul>
+</section>
+
+<section class="card" id="privacy">
+  <h2>Your data</h2>
+  <ul>
+    <li>Tula never reads your chats. It only sees what you share to it.</li>
+    <li>It keeps the fields you confirm, never the message or screenshot.</li>
+    <li>For the pilot we look at counts (how many deadlines you saved, how many you edited) and crash reports. Your deadlines are backed up to your account so your phones stay in sync; we don't look at them.</li>
+    <li>Delete everything any time: You tab → Delete my data.</li>
+  </ul>
+  <p><a href="privacy.html">Privacy policy</a> · <a href="delete-account.html">Delete your account</a></p>
+</section>
+
+<section class="card">
+  <h2>Leaving or getting help</h2>
+  <p>Stop any time: just uninstall, or delete your data first from the You tab. Stuck or found a bug? Message us in the pilot group or at <span class="todo">[contact email]</span>.</p>
+</section>
+
+<footer><span>Tula · pilot</span><a href="privacy.html">Privacy</a><a href="delete-account.html">Delete your account</a></footer>
+</main></body></html>

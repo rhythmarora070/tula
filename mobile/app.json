@@ -1,0 +1,89 @@
+{
+  "expo": {
+    "name": "Tula",
+    "slug": "tula",
+    "owner": "chirag-aggs-team",
+    "scheme": "tula",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#F6F3FA",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.tula.deadlines"
+    },
+    "android": {
+      "package": "app.tula.deadlines",
+      "adaptiveIcon": {
+        "backgroundColor": "#7462B5",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "android.permission.POST_NOTIFICATIONS"
+      ],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-share-intent",
+        {
+          "androidIntentFilters": [
+            "text/*",
+            "image/*",
+            "application/pdf"
+          ],
+          "disableIOS": true
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#7462B5"
+        }
+      ],
+      "expo-font",
+      "@react-native-community/datetimepicker",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#F6F3FA",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#1B1923"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": false
+    },
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "68513bcb-d869-4e5b-9dbe-ae9daa977c38"
+      },
+      "privacyUrl": "https://rhythmarora070.github.io/tula/privacy.html"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/68513bcb-d869-4e5b-9dbe-ae9daa977c38"
+    },
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    }
+  }
+}
